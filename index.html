@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바보들의 모임 - 바보들의 아이디어</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin: 0 0 1rem 0;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .idea-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .idea-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .idea-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .idea-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .idea-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .features {
+            background: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            font-size: 1.1rem;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .ideas-grid { grid-template-columns: 1fr; }
+            .contact-info { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <h1>💡 바보들의 모임</h1>
+            <p>새롭고 기발한 아이디어와 시나리오를 찾으세요. 여기에 있습니다!</p>
+        </div>
+    </header>
+
+    <!-- 바보들의 아이디어 -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">바보들의 아이디어</h2>
+            
+            <div class="ideas-grid">
+                <div class="idea-card">
+                    <span class="idea-icon">🍕</span>
+                    <h3 class="idea-title">피자 배달 로봇</h3>
+                    <p class="idea-description">로봇이 직접 와서 피자를 만들어주는 서비스. 로봇 자체에 피자 만드는 기계를 보유하여 현장에서 바로 제작!</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">👂</span>
+                    <h3 class="idea-title">귀걸이 양말</h3>
+                    <p class="idea-description">양말을 귀걸이나 신발 형태로 만들어 패션 아이템으로 활용하는 독특한 아이디어</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">☂️</span>
+                    <h3 class="idea-title">선탠하는 우산</h3>
+                    <p class="idea-description">비를 막는 대신 햇빛을 모아서 선탠을 도와주는 역방향 우산</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">🐕</span>
+                    <h3 class="idea-title">개, 고양이 번역기</h3>
+                    <p class="idea-description">반려동물의 언어를 인간의 언어로 번역해주는 혁신적인 커뮤니케이션 도구</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">🍽️</span>
+                    <h3 class="idea-title">마법의 과식 음식</h3>
+                    <p class="idea-description">과식하면 탈이 나서 며칠 동안 먹지 않게 되어 자연스럽게 다이어트가 되는 음식</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">🤖</span>
+                    <h3 class="idea-title">주차 지킴이 로봇</h3>
+                    <p class="idea-description">주인은 목적지로 가고, 로봇은 주인이 올 때까지 차를 지켜주는 스마트 주차 서비스</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">🙋</span>
+                    <h3 class="idea-title">위계질서 바로세우기</h3>
+                    <p class="idea-description">하급생에게 먼저 인사하여 기존 위계질서를 뒤바꾸는 사회 실험</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">🚗</span>
+                    <h3 class="idea-title">주차공간 없으면 차 안가져가기</h3>
+                    <p class="idea-description">주차할 공간이 없으면 아예 차를 가져가지 않는 환경 친화적 사고방식</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">🎓</span>
+                    <h3 class="idea-title">서울 대학원으로 전환</h3>
+                    <p class="idea-description">서울대를 없애고 서울 대학원으로 만들어 자유 경쟁체제로 선발해서 실력으로만 승부!</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">⚔️</span>
+                    <h3 class="idea-title">군대에서 기술배워 제대하면 모두가 취업자</h3>
+                    <p class="idea-description">군대에서 실용적인 기술을 배워서 제대 후 바로 취업할 수 있는 시스템</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">👶</span>
+                    <h3 class="idea-title">동심 아동복 광고</h3>
+                    <p class="idea-description">3,40대 아줌마 아저씨가 직접 아동복을 입고 아동복 광고하기!</p>
+                </div>
+
+                <div class="idea-card">
+                    <span class="idea-icon">👗</span>
+                    <h3 class="idea-title">상식이 무너진 패션쇼</h3>
+                    <p class="idea-description">여자같은 남자가 여자패션쇼에, 남자같은 여자가 남자패션쇼에 참가하고 마지막에 알아맞추는 퀴즈로 상품을 주는 재미있는 패션쇼</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 바보들의 특징 -->
+    <section class="section features">
+        <div class="container">
+            <h2 class="section-title">바보들의 특징</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">😊</div>
+                    <h3 class="feature-title">언제나 웃는 마음</h3>
+                    <p>손해를 봐도, 속아도 항상 웃으며 긍정적으로 생각합니다</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">❤️</div>
+                    <h3 class="feature-title">모든 사람은 좋은 사람</h3>
+                    <p>바보들의 눈에는 모든 사람이 좋은 사람으로 보입니다</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">AI를 초월하는 상상력</h3>
+                    <p>바보들의 아이디어는 AI의 상상력을 초월할 수도 있습니다</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">기발한 발상</h3>
+                    <p>남들이 생각하지 못하는 독특하고 창의적인 아이디어</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3 class="feature-title">순수한 마음</h3>
+                    <p>복잡한 계산 없이 순수한 마음으로 세상을 바라봅니다</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌟</div>
+                    <h3 class="feature-title">무한한 가능성</h3>
+                    <p>상식의 틀을 벗어나 무한한 가능성을 탐구합니다</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 연락처 -->
+    <section class="section contact">
+        <div class="container">
+            <h2 class="section-title">연락처</h2>
+            <p>새로운 아이디어와 협업 문의를 기다립니다!</p>
+            <div class="contact-info">
+                <div class="contact-item">📧 jumpbabo@gmail.com</div>
+                <div class="contact-item">📞 02-2212-5757</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 바보들의 모임. 모든 아이디어는 바보들의 순수한 상상력에서 나왔습니다.</p>
+        </div>
+    </footer>
+</body>
+</html>

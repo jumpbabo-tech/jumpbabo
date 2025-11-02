@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바보들의 모임 - 명함</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .business-card {
+            width: 350px;
+            height: 200px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .business-card:hover {
+            transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .card-front {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+            color: white;
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform: rotateY(180deg);
+        }
+
+        .business-card:hover .card-back {
+            opacity: 1;
+            transform: rotateY(0deg);
+        }
+
+        .business-card:hover .card-front {
+            opacity: 0;
+            transform: rotateY(-180deg);
+        }
+
+        /* 앞면 스타일 */
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #667eea);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            animation: rainbow-pulse 3s infinite;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes rainbow-pulse {
+            0% { 
+                transform: scale(1); 
+                filter: hue-rotate(0deg) brightness(1);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
+            10% { 
+                transform: scale(1.3) rotate(5deg); 
+                filter: hue-rotate(45deg) brightness(2) contrast(1.5);
+                box-shadow: 0 0 30px #ffff00, 0 0 40px #ffff00;
+            }
+            15% { 
+                transform: scale(0.9) rotate(-3deg); 
+                filter: hue-rotate(90deg) brightness(0.5) saturate(2);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            }
+            25% { 
+                transform: scale(1.1); 
+                filter: hue-rotate(180deg) brightness(1.2);
+                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+            }
+            50% { 
+                transform: scale(1.05); 
+                filter: hue-rotate(270deg) brightness(1);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
+            75% { 
+                transform: scale(1.1); 
+                filter: hue-rotate(360deg) brightness(1.1);
+                box-shadow: 0 4px 18px rgba(240, 147, 251, 0.4);
+            }
+            100% { 
+                transform: scale(1); 
+                filter: hue-rotate(0deg) brightness(1);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .company-name {
+            font-size: 1.4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slogan {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            font-size: 0.8rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .contact-info i {
+            color: #667eea;
+            margin-right: 5px;
+            width: 15px;
+        }
+
+        /* 뒷면 스타일 */
+        .back-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .back-content p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .decorative-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .circle-1 {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 50%;
+        }
+
+        .circle-2 {
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(240, 147, 251, 0.1);
+            border-radius: 50%;
+        }
+
+        .print-version {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .print-card {
+            width: 350px;
+            height: 200px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .print-card .company-name {
+            color: #667eea;
+            -webkit-text-fill-color: #667eea;
+        }
+
+        @media print {
+            body {
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .business-card {
+                box-shadow: none;
+                border: 2px solid #667eea;
+                background: white;
+                transform: none;
+            }
+            
+            .company-name {
+                color: #667eea !important;
+                -webkit-text-fill-color: #667eea !important;
+            }
+            
+            .card-back {
+                display: none;
+            }
+            
+            .print-version {
+                display: none;
+            }
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 인터랙티브 명함 -->
+        <div class="business-card" id="businessCard">
+            <!-- 장식 요소 -->
+            <div class="decorative-elements">
+                <div class="circle-1"></div>
+                <div class="circle-2"></div>
+            </div>
+            
+            <!-- 앞면 -->
+            <div class="card-front">
+                <div class="logo-section">
+                    <div class="logo-icon">🧑‍💻⚡😵‍💫</div>
+                    <div class="company-name">바보들의 모임</div>
+                </div>
+                
+                <div class="slogan">바보들의 아이디어</div>
+                
+                <div class="tagline">
+                    새롭고 기발한 아이디어나 시나리오 등을<br>
+                    찾으세요. 여기에 있습니다!
+                </div>
+                
+                <div class="contact-info">
+                    <div><i class="fas fa-envelope"></i> jumpbabo@gmail.com</div>
+                    <div><i class="fas fa-mobile-alt"></i> <strong>010-7596-1026</strong></div>
+                    <div><i class="fas fa-phone"></i> <strong>02-2212-5757</strong></div>
+                    <div><i class="fas fa-globe"></i> 바보들의모임.com</div>
+                </div>
+            </div>
+            
+            <!-- 뒷면 -->
+            <div class="card-back">
+                <div class="back-content">
+                    <h3>🧠 우리의 미션</h3>
+                    <p>
+                        똑똑한 사람들이 생각하지 못하는<br>
+                        기발하고 창의적인 아이디어로<br>
+                        세상을 더 재미있게 만듭니다!
+                    </p>
+                    <br>
+                    <p>
+                        <strong>🤪 바보지수 99% 보장!</strong><br>
+                        AI도 놀라는 상상력의 힘!
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 인쇄용 버전 -->
+        <div class="print-version">
+            <h3>📱 인쇄용 명함 버전</h3>
+            <button class="download-btn" onclick="window.print()">
+                <i class="fas fa-print"></i> 명함 인쇄하기
+            </button>
+            <button class="download-btn" onclick="downloadCard()">
+                <i class="fas fa-download"></i> 이미지로 저장
+            </button>
+            
+            <!-- 인쇄용 명함 -->
+            <div class="print-card">
+                <div class="logo-section">
+                    <div class="logo-icon">🧑‍💻⚡😵‍💫</div>
+                    <div class="company-name">바보들의 모임</div>
+                </div>
+                
+                <div class="slogan">바보들의 아이디어</div>
+                
+                <div class="tagline">
+                    새롭고 기발한 아이디어나 시나리오 등을<br>
+                    찾으세요. 여기에 있습니다!
+                </div>
+                
+                <div class="contact-info">
+                    <div><i class="fas fa-envelope"></i> jumpbabo@gmail.com</div>
+                    <div><i class="fas fa-mobile-alt"></i> <strong>010-7596-1026</strong></div>
+                    <div><i class="fas fa-phone"></i> <strong>02-2212-5757</strong></div>
+                    <div><i class="fas fa-globe"></i> 바보들의모임.com</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 명함 호버 효과
+        const card = document.getElementById('businessCard');
+        
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'rotateY(10deg) rotateX(5deg) scale(1.05)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+        });
+
+        // 이미지로 저장 기능
+        function downloadCard() {
+            // HTML2Canvas 라이브러리를 사용하여 명함을 이미지로 변환
+            // 실제 구현시에는 html2canvas 라이브러리 필요
+            alert('🎨 명함 이미지 저장 기능입니다!\n\n실제 구현시에는 html2canvas 라이브러리를 추가하여\n명함을 PNG/JPG 이미지로 저장할 수 있습니다!');
+        }
+
+        // 키보드 인터랙션
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                card.click();
+            }
+        });
+
+        // 명함 클릭시 효과
+        card.addEventListener('click', () => {
+            card.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                card.style.animation = '';
+            }, 500);
+        });
+
+        // 모바일 터치 지원
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        card.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        });
+
+        card.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touchX = e.touches[0].clientX;
+            const touchY = e.touches[0].clientY;
+            
+            const deltaX = (touchX - touchStartX) / 10;
+            const deltaY = (touchY - touchStartY) / 10;
+            
+            card.style.transform = `rotateY(${deltaX}deg) rotateX(${-deltaY}deg) scale(1.05)`;
+        });
+
+        card.addEventListener('touchend', () => {
+            card.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+        });
+    </script>
+</body>
+</html>

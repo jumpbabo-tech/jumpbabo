@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>천연아연 - 자연의 힘</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 8mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #000;
+            padding: 3px;
+        }
+
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 3mm;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+            border: 2px solid #2c3e50;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 8px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 6px;
+        }
+
+        /* Ha=Da+Ble 브랜드명 스타일링 */
+        .brand-name {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+            color: #000;
+        }
+
+        .brand-name .ha, .brand-name .da, .brand-name .ble { 
+            color: #e74c3c; 
+        }
+        .brand-name .equals, .brand-name .plus { 
+            color: #3498db; 
+            font-size: 2.5rem; 
+        }
+
+        .main-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #2c3e50;
+            margin: 4px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .mystery-component {
+            margin-top: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            border: 2px solid #9b59b6;
+            background: linear-gradient(45deg, #f8f9ff, #e8eaf6);
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(155, 89, 182, 0.2);
+        }
+
+        .component-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #8e44ad;
+        }
+
+        /* 메인 효과 카드들 */
+        .effects-grid {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .row:last-child {
+            margin-bottom: 0;
+        }
+
+        .effect-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9ff);
+            padding: 8px;
+            border: 2px solid #3498db;
+            text-align: center;
+            flex: 1;
+            border-radius: 6px;
+            box-shadow: 0 3px 8px rgba(52, 152, 219, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .effect-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.3);
+        }
+
+        .effect-icon {
+            font-size: 1.4rem;
+            margin-bottom: 3px;
+            color: #e67e22;
+        }
+
+        .effect-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+
+        .effect-description {
+            font-size: 0.65rem;
+            color: #34495e;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .effect-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            justify-content: center;
+        }
+
+        .highlight-tag {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 2px 4px;
+            font-size: 0.55rem;
+            font-weight: 600;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(231, 76, 60, 0.3);
+        }
+
+        .transform-process {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin: 3px 0;
+        }
+
+        .process-step {
+            background: linear-gradient(145deg, #ecf0f1, #bdc3c7);
+            padding: 2px 4px;
+            border: 1px solid #3498db;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #2c3e50;
+            border-radius: 3px;
+        }
+
+        .process-arrow {
+            font-size: 0.7rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* 하단 정보 */
+        .bottom-info {
+            background: linear-gradient(145deg, #ffffff, #f1f2f6);
+            padding: 6px;
+            border: 2px solid #9b59b6;
+            text-align: center;
+            border-radius: 6px;
+            box-shadow: 0 3px 8px rgba(155, 89, 182, 0.2);
+        }
+
+        .bottom-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #8e44ad;
+            margin-bottom: 4px;
+            border-bottom: 2px solid #9b59b6;
+            padding-bottom: 2px;
+        }
+
+        .formula-breakdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin: 4px 0;
+            flex-wrap: wrap;
+        }
+
+        .formula-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 50px;
+        }
+
+        .formula-icon {
+            font-size: 1rem;
+            margin-bottom: 2px;
+            color: #f39c12;
+        }
+
+        .formula-text {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .formula-plus {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 0 2px;
+        }
+
+        /* 정보 그리드 */
+        .info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            margin: 4px 0;
+        }
+
+        .info-item {
+            flex: 1 1 calc(33.333% - 4px);
+            min-width: 100px;
+            text-align: center;
+            padding: 4px;
+            background: linear-gradient(145deg, #f8f9ff, #e8eaf6);
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.15);
+        }
+
+        .info-icon {
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+            color: #e67e22;
+        }
+
+        .info-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1px;
+        }
+
+        .info-description {
+            font-size: 0.55rem;
+            color: #34495e;
+            line-height: 1.1;
+        }
+
+        /* 간단한 메시지 스타일 */
+        .simple-message {
+            margin: 4px 0;
+            padding: 4px;
+            border: 2px solid #27ae60;
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(46, 204, 113, 0.3);
+        }
+        
+        .message-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* 연락처 정보 */
+        .contact-info {
+            margin-top: 3px;
+            padding: 3px;
+            text-align: center;
+            border-top: 1px solid #000;
+        }
+
+        .phone-input-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+
+        .phone-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .phone-input {
+            width: 140px;
+            padding: 6px 10px;
+            border: 2px solid #3498db;
+            font-size: 0.85rem;
+            text-align: center;
+            background: linear-gradient(145deg, #ffffff, #f8f9ff);
+            border-radius: 4px;
+        }
+
+        .disclaimer {
+            font-size: 0.5rem;
+            color: #666;
+            margin-top: 2px;
+            line-height: 1.0;
+            text-align: center;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                min-height: auto;
+            }
+            
+            .brand-name {
+                font-size: 2rem;
+            }
+            
+            .main-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <div class="brand-name">
+                <span class="ha">Ha</span><span class="equals">=</span><span class="da">Da</span><span class="plus">+</span><span class="ble">Ble</span>
+            </div>
+            <h1 class="main-title">천연아연</h1>
+            <p class="subtitle">독성을 영양으로 변환하는 기적의 천연 미네랄 복합체</p>
+            <div class="mystery-component">
+                <span class="component-label">🔬 신비한 미지 성분 'α(알파)'가 기적을 만듭니다</span>
+            </div>
+        </div>
+
+        <!-- 메인 효과 카드들 -->
+        <div class="effects-grid">
+            <!-- 첫 번째 줄 -->
+            <div class="row">
+                <div class="effect-card">
+                    <div class="effect-icon">🚬🛡️</div>
+                    <h3 class="effect-title">담배 → 독성 중화</h3>
+                    <p class="effect-description">담배의 유해 성분을 완전히 중화시키고 불쾌한 냄새를 현저히 감소시킵니다.</p>
+                    <div class="transform-process">
+                        <span class="process-step">유해 독성</span>
+                        <span class="process-arrow">→</span>
+                        <span class="process-step">중화 감소</span>
+                    </div>
+                    <div class="effect-highlights">
+                        <span class="highlight-tag">니코틴 50% 감소</span>
+                        <span class="highlight-tag">타르 50% 제거</span>
+                        <span class="highlight-tag">목 보호</span>
+                    </div>
+                </div>
+
+                <div class="effect-card">
+                    <div class="effect-icon">🍺⚡</div>
+                    <h3 class="effect-title">술 → 간 보호 보약</h3>
+                    <p class="effect-description">알코올을 분자 수준에서 분해하여 간 건강을 돕는 영양소로 완전 변환합니다.</p>
+                    <div class="transform-process">
+                        <span class="process-step">알코올</span>
+                        <span class="process-arrow">→</span>
+                        <span class="process-step">간 보호</span>
+                    </div>
+                    <div class="effect-highlights">
+                        <span class="highlight-tag">숙취 제로</span>
+                        <span class="highlight-tag">간 보호</span>
+                        <span class="highlight-tag">해독 촉진</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 두 번째 줄 -->
+            <div class="row">
+                <div class="effect-card">
+                    <div class="effect-icon">💪🌟</div>
+                    <h3 class="effect-title">암환자 생명력 회복</h3>
+                    <p class="effect-description">식사를 거부하던 암환자들이 다시 식욕을 되찾고 생명력을 회복하는 기적을 경험합니다.</p>
+                    <div class="transform-process">
+                        <span class="process-step">식욕 상실</span>
+                        <span class="process-arrow">→</span>
+                        <span class="process-step">생명력 회복</span>
+                    </div>
+                    <div class="effect-highlights">
+                        <span class="highlight-tag">5-6일 미각 회복</span>
+                        <span class="highlight-tag">9-11일 식욕 증진</span>
+                        <span class="highlight-tag">20일 이상 정상 식사</span>
+                    </div>
+                </div>
+
+                <div class="effect-card">
+                    <div class="effect-icon">❤️🔄</div>
+                    <h3 class="effect-title">💥 혈액순환 개선 최고 💥</h3>
+                    <p class="effect-description"><strong>천연 미네랄이 혈관을 최대한 확장시키고 혈류량을 극대화하여 전신에 최고의 활력을 공급하는 최상급 효과를 발휘합니다!</strong></p>
+                    <div class="transform-process">
+                        <span class="process-step">순환 장애</span>
+                        <span class="process-arrow">→</span>
+                        <span class="process-step">최고 활력</span>
+                    </div>
+                    <div class="effect-highlights">
+                        <span class="highlight-tag">💪 강력한 혈관 확장</span>
+                        <span class="highlight-tag">⚡ 폭발적 에너지 증진</span>
+                        <span class="highlight-tag">🧠 뇌혈류량 극대화</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 하단 정보 -->
+        <div class="bottom-info">
+            <h3 class="bottom-title">천연 미네랄 + 아연 + 미지성분 α</h3>
+            <div class="formula-breakdown">
+                <div class="formula-item">
+                    <span class="formula-icon">🏔️</span>
+                    <span class="formula-text">84종 천연 미네랄</span>
+                </div>
+                <div class="formula-plus">+</div>
+                <div class="formula-item">
+                    <span class="formula-icon">⚡</span>
+                    <span class="formula-text">고순도 아연</span>
+                </div>
+                <div class="formula-plus">+</div>
+                <div class="formula-item">
+                    <span class="formula-icon">🧪</span>
+                    <span class="formula-text">미지성분 α</span>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-icon">🚭</div>
+                    <div class="info-title">흡연자 필수</div>
+                    <div class="info-description">니코틴·타르 독성 완전 중화</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🍺</div>
+                    <div class="info-title">음주자 필수</div>
+                    <div class="info-description">알코올 독성 즉시 분해</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">💪</div>
+                    <div class="info-title">면역력 강화</div>
+                    <div class="info-description">질병 저항력 극대화</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🧠</div>
+                    <div class="info-title">뇌 활성화</div>
+                    <div class="info-description">집중력·기억력 향상</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">❤️</div>
+                    <div class="info-title">혈액순환</div>
+                    <div class="info-description">혈관 확장·혈류 개선</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">💇‍♂️</div>
+                    <div class="info-title">탈모예방</div>
+                    <div class="info-description">바른 후 5-6일후 효과</div>
+                </div>
+            </div>
+
+            <div class="simple-message">
+                <span class="message-text">당신도 바로 느낄 수 있습니다</span>
+            </div>
+
+            <!-- 면책 조항만 유지 -->
+            <div class="contact-info">
+                <div class="disclaimer">
+                    * 본 제품은 질병의 예방 및 치료를 위한 의약품이 아닙니다. * 개인차에 따라 효과는 다를 수 있습니다.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

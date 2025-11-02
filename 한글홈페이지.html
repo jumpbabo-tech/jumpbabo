@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바보들의 모임 - 세상을 바꾸는 바보들의 아이디어</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', '맑은 고딕', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            padding: 50px 0;
+        }
+        
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+        
+        .ideas-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #333;
+        }
+        
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .idea-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+        
+        .idea-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .idea-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .idea-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .idea-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        .contact-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .contact-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .contact-info {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #666;
+        }
+        
+        .contact-info strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>🤪 바보들의 모임 🤪</h1>
+            <p>똑똑한 사람들이 생각하지 못하는 기발한 아이디어로 세상을 바꿉니다</p>
+        </div>
+
+        <!-- 아이디어 섹션 -->
+        <div class="ideas-section">
+            <h2 class="section-title">🧠 우리의 바보 아이디어들</h2>
+            
+            <div class="ideas-grid">
+                <div class="idea-card">
+                    <div class="idea-icon">🤖</div>
+                    <h3 class="idea-title">피자 배달 로봇</h3>
+                    <p class="idea-description">
+                        로봇이 직접 집 앞에 와서 피자를 현장에서 만들어줍니다! 
+                        로봇 자체에 피자 제조 기계를 내장해서 갓 만든 피자를 바로! 🍕🤖
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">👂</div>
+                    <h3 class="idea-title">잃어버린 귀걸이·신발 추적기</h3>
+                    <p class="idea-description">
+                        한쪽만 잃어버린 귀걸이나 신발을 찾아주는 GPS 추적 장치! 
+                        "왼쪽 신발이 소파 밑에 있어요!" 더 이상 짝 잃은 슬픔은 없다! 👠💍
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">🏖️</div>
+                    <h3 class="idea-title">선탠하는 우산</h3>
+                    <p class="idea-description">
+                        햇빛을 막는 게 아니라 더 집중시켜주는 우산! 
+                        완벽한 선탠을 위한 햇빛 집광 시스템! ☀️🌂
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">🐕</div>
+                    <h3 class="idea-title">개·고양이 번역기</h3>
+                    <p class="idea-description">
+                        멍멍, 야옹을 인간의 말로 번역해주는 장치! 
+                        개: "산책 가자!", 고양이: "귀찮아, 밥 줘" 🐱🐶💬
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">🚗</div>
+                    <h3 class="idea-title">주차 로봇 - 주인은 목적지로!</h3>
+                    <p class="idea-description">
+                        주인은 목적지로 가고, 로봇이 차를 지켜줍니다! 
+                        주인이 올 때까지 차량 보안까지! "차 지켜줄게!" 🤖💪
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">🍔</div>
+                    <h3 class="idea-title">마법의 과식 음식</h3>
+                    <p class="idea-description">
+                        과식하면 탈이 나서 며칠 동안 못 먹게 되는 음식! 
+                        결국 살이 빠지는 천재적 다이어트 음식! "과식 = 단식" 🤢➡️😎
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">🙋‍♂️</div>
+                    <h3 class="idea-title">위계질서 바로세우기</h3>
+                    <p class="idea-description">
+                        하급생에게 먼저 인사하기! 선배가 후배에게 먼저 인사하는 혁신적인 문화! 
+                        "안녕하세요 후배님!" 진정한 위계질서 혁명! 🔄⚡
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">🚗</div>
+                    <h3 class="idea-title">주차공간 없으면 차 안가져가기</h3>
+                    <p class="idea-description">
+                        주차할 곳이 없으면 아예 차를 두고 가는 극한의 선택! 
+                        환경도 지키고 스트레스도 없애는 일석이조 🌱
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">🎓</div>
+                    <h3 class="idea-title">서울대 → 서울 대학원으로</h3>
+                    <p class="idea-description">
+                        학부는 없애고 대학원만! 자유 경쟁체제로 선발해서 
+                        실력으로만 승부! "안녕하세요 박사님!" 인사가 일상 🤓⚔️
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">🪖</div>
+                    <h3 class="idea-title">군대에서 기술배워 제대하면 모두가 취업자</h3>
+                    <p class="idea-description">
+                        군복무 = 직업학교! 제대할 때는 100% 취업 보장! 
+                        "제대 축하해! 어느 회사 입사해?" 💪⚙️
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">👶</div>
+                    <h3 class="idea-title">동심 아동복 광고</h3>
+                    <p class="idea-description">
+                        3,40대 아줌마 아저씨가 직접 아동복을 입고 아동복 광고하기! 
+                        "우리 아이도 이렇게 예뻐요!" 진짜 부모의 마음으로 🧸👨‍👩‍👧‍👦
+                    </p>
+                </div>
+
+                <div class="idea-card">
+                    <div class="idea-icon">👗</div>
+                    <h3 class="idea-title">상식이 무너진 패션쇼</h3>
+                    <p class="idea-description">
+                        여자같은 남자가 여자 패션쇼에, 남자같은 여자가 남자 패션쇼에! 
+                        마지막엔 "진짜 성별 맞추기 퀴즈"로 상품까지! 👔💄🎁
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 연락처 섹션 -->
+        <div class="contact-section">
+            <h2 class="contact-title">📞 연락처</h2>
+            <div class="contact-info">
+                📧 이메일: <strong>jumpbabo@gmail.com</strong><br>
+                📱 휴대폰: <strong>010-7596-1026</strong><br>
+                📞 전화: <strong>02-2212-5757</strong><br>
+                🌐 웹사이트: <strong>바보들의모임.com</strong>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

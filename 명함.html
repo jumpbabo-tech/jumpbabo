@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>바보들의 모임 명함</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 50px;
+        }
+        
+        .card {
+            width: 500px;
+            height: 300px;
+            background-color: white;
+            border: 3px solid #4444ff;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px auto;
+            box-shadow: 5px 5px 15px gray;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: #ffff00;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 80px;
+            font-size: 40px;
+            float: left;
+            margin-right: 20px;
+            animation: flash 2s infinite;
+        }
+        
+        @keyframes flash {
+            0% { background-color: #ffff00; }
+            50% { background-color: #ff0000; }
+            100% { background-color: #ffff00; }
+        }
+        
+        .company {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4444ff;
+            margin-bottom: 10px;
+        }
+        
+        .slogan {
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            font-size: 20px;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: 30px;
+            clear: both;
+            padding-top: 20px;
+        }
+        
+        .contact {
+            font-size: 18px;
+            line-height: 30px;
+        }
+        
+        .phone {
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 22px;
+        }
+        
+        .email {
+            color: #0066cc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">⚡</div>
+        <div class="company">바보들의 모임</div>
+        <div class="slogan">바보들의 아이디어</div>
+        
+        <div class="message">
+            새롭고 기발한 아이디어나 시나리오 등을<br>
+            찾으세요. 여기에 있습니다!
+        </div>
+        
+        <div class="contact">
+            📧 이메일: <span class="email">jumpbabo@gmail.com</span><br>
+            📱 휴대폰: <span class="phone">010-7596-1026</span><br>
+            ☎️ 전화: <span class="phone">02-2212-5757</span><br>
+            🌐 웹사이트: 바보들의모임.com
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <button onclick="window.print()" style="padding: 15px 30px; font-size: 18px; background-color: #4444ff; color: white; border: none; border-radius: 10px; cursor: pointer;">
+            🖨️ 명함 인쇄하기
+        </button>
+    </div>
+</body>
+</html>
+

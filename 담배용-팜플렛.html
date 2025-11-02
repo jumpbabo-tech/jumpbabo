@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>천연아연 - 흡연자 전용</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 8mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background: white;
+            min-height: 100vh;
+            color: #000;
+            padding: 3px;
+        }
+
+        .container {
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 5mm;
+            background: white;
+            border: 3px solid #000;
+        }
+
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 12px;
+        }
+
+        .brand-name {
+            font-size: 3.8rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            color: #000;
+        }
+
+        .brand-name .ha, .brand-name .da, .brand-name .ble { 
+            color: #000; 
+        }
+        .brand-name .equals, .brand-name .plus { 
+            color: #666; 
+            font-size: 2.5rem; 
+        }
+
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #000;
+            margin: 8px 0;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .target-audience {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #000;
+            margin: 15px 0;
+            text-align: center;
+            border: 4px solid #000;
+            padding: 20px;
+            background: #f8f8f8;
+        }
+
+        /* 메인 효과 카드들 */
+        .effects-grid {
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .effect-card {
+            background: white;
+            padding: 15px;
+            border: 3px solid #000;
+            text-align: center;
+            flex: 1;
+        }
+
+        .effect-icon {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            color: #000;
+        }
+
+        .effect-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .effect-description {
+            font-size: 0.85rem;
+            color: #333;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .effect-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+        }
+
+        .highlight-tag {
+            background: #000;
+            color: white;
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .transform-process {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+
+        .process-step {
+            background: white;
+            padding: 4px 8px;
+            border: 2px solid #000;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .process-arrow {
+            font-size: 1rem;
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* 하단 정보 */
+        .bottom-info {
+            background: white;
+            padding: 15px;
+            border: 3px solid #000;
+            text-align: center;
+        }
+
+        .bottom-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .formula-breakdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+
+        .formula-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 70px;
+        }
+
+        .formula-icon {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+            color: #000;
+        }
+
+        .formula-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #000;
+            text-align: center;
+        }
+
+        .formula-plus {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #000;
+            margin: 0 6px;
+        }
+
+        .info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 12px 0;
+        }
+
+        .info-item {
+            flex: 1 1 calc(50% - 8px);
+            min-width: 180px;
+            text-align: center;
+            padding: 10px;
+            background: #f8f8f8;
+            border: 2px solid #000;
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            color: #000;
+        }
+
+        .info-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 4px;
+        }
+
+        .info-description {
+            font-size: 0.75rem;
+            color: #333;
+            line-height: 1.2;
+        }
+
+        .simple-message {
+            margin: 12px 0;
+            padding: 10px;
+            border: 3px solid #000;
+            background: #f8f8f8;
+            text-align: center;
+        }
+        
+        .message-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .contact-info {
+            margin-top: 8px;
+            padding: 8px;
+            text-align: center;
+            border-top: 2px solid #000;
+        }
+
+        .phone-input-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+
+        .phone-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .phone-input {
+            width: 140px;
+            padding: 6px 10px;
+            border: 2px solid #000;
+            font-size: 0.9rem;
+            text-align: center;
+            background: white;
+        }
+
+        .disclaimer {
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 6px;
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <div class="brand-name">
+                <span class="ha">Ha</span><span class="equals">=</span><span class="da">Da</span><span class="plus">+</span><span class="ble">Ble</span>
+            </div>
+            <h1 class="main-title">천연아연</h1>
+            <p class="subtitle">독성을 영양으로 변환하는 기적의 천연 미네랄</p>
+        </div>
+
+        <div class="target-audience">
+            🚬 흡연자 전용 특화 제품 🚬
+        </div>
+
+        <!-- 메인 효과 카드들 -->
+        <div class="effects-grid">
+            <div class="row">
+                <div class="effect-card">
+                    <div class="effect-icon">🚬🛡️</div>
+                    <h3 class="effect-title">담배 독성 완전 중화</h3>
+                    <p class="effect-description">니코틴과 타르를 분자 수준에서 완전히 중화시키고 불쾌한 냄새를 현저히 감소</p>
+                    <div class="transform-process">
+                        <span class="process-step">유해 독성</span>
+                        <span class="process-arrow">→</span>
+                        <span class="process-step">완전 중화</span>
+                    </div>
+                    <div class="effect-highlights">
+                        <span class="highlight-tag">니코틴 50% 감소</span>
+                        <span class="highlight-tag">타르 50% 제거</span>
+                        <span class="highlight-tag">목 보호</span>
+                    </div>
+                </div>
+
+                <div class="effect-card">
+                    <div class="effect-icon">🫁💪</div>
+                    <h3 class="effect-title">폐 기능 회복</h3>
+                    <p class="effect-description">손상된 폐 조직을 재생하고 호흡 기능을 개선하여 맑고 깨끗한 숨</p>
+                    <div class="transform-process">
+                        <span class="process-step">폐 손상</span>
+                        <span class="process-arrow">→</span>
+                        <span class="process-step">기능 회복</span>
+                    </div>
+                    <div class="effect-highlights">
+                        <span class="highlight-tag">호흡량 증가</span>
+                        <span class="highlight-tag">가래 감소</span>
+                        <span class="highlight-tag">기침 완화</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="effect-card">
+                    <div class="effect-icon">🦷✨</div>
+                    <h3 class="effect-title">구강 건강 개선</h3>
+                    <p class="effect-description">담배로 인한 구강 내 세균을 제거하고 치아 변색을 방지하며 입 냄새를 근본적으로 해결</p>
+                    <div class="transform-process">
+                        <span class="process-step">구강 악화</span>
+                        <span class="process-arrow">→</span>
+                        <span class="process-step">건강 회복</span>
+                    </div>
+                    <div class="effect-highlights">
+                        <span class="highlight-tag">입냄새 제거</span>
+                        <span class="highlight-tag">치아 보호</span>
+                        <span class="highlight-tag">잇몸 강화</span>
+                    </div>
+                </div>
+
+                <div class="effect-card">
+                    <div class="effect-icon">❤️🔄</div>
+                    <h3 class="effect-title">혈액순환 극대화</h3>
+                    <p class="effect-description">담배로 인해 수축된 혈관을 확장시키고 혈액순환을 개선하여 전신에 활력 공급</p>
+                    <div class="transform-process">
+                        <span class="process-step">혈관 수축</span>
+                        <span class="process-arrow">→</span>
+                        <span class="process-step">순환 개선</span>
+                    </div>
+                    <div class="effect-highlights">
+                        <span class="highlight-tag">혈관 확장</span>
+                        <span class="highlight-tag">산소 공급</span>
+                        <span class="highlight-tag">활력 증진</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 하단 정보 -->
+        <div class="bottom-info">
+            <h3 class="bottom-title">천연 미네랄 + 아연 + 미지성분 α</h3>
+            <div class="formula-breakdown">
+                <div class="formula-item">
+                    <span class="formula-icon">🏔️</span>
+                    <span class="formula-text">84종 천연 미네랄</span>
+                </div>
+                <div class="formula-plus">+</div>
+                <div class="formula-item">
+                    <span class="formula-icon">⚡</span>
+                    <span class="formula-text">고순도 아연</span>
+                </div>
+                <div class="formula-plus">+</div>
+                <div class="formula-item">
+                    <span class="formula-icon">🧪</span>
+                    <span class="formula-text">미지성분 α</span>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-icon">🚭</div>
+                    <div class="info-title">흡연 독성 중화</div>
+                    <div class="info-description">니코틴·타르 독성을 완전히 중화하여 몸을 보호</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🫁</div>
+                    <div class="info-title">폐 기능 회복</div>
+                    <div class="info-description">손상된 폐 조직 재생과 호흡 기능 개선</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🦷</div>
+                    <div class="info-title">구강 건강</div>
+                    <div class="info-description">입냄새 제거와 치아·잇몸 보호</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">❤️</div>
+                    <div class="info-title">혈액순환 개선</div>
+                    <div class="info-description">혈관 확장으로 전신 활력 증진</div>
+                </div>
+            </div>
+
+            <div class="simple-message">
+                <span class="message-text">흡연자라면 반드시 필요한 제품입니다</span>
+            </div>
+
+            <div class="contact-info">
+                <div class="phone-input-section">
+                    <span class="phone-label">📞 전화번호:</span>
+                    <input type="text" class="phone-input" placeholder="번호를 적어주세요" value="">
+                </div>
+                <div class="disclaimer">
+                    * 본 제품은 질병의 예방 및 치료를 위한 의약품이 아닙니다. * 개인차에 따라 효과는 다를 수 있습니다.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

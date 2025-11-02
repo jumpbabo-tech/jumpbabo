@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바보들의 모임 - 새롭고 기발한 아이디어</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --accent-color: #e74c3c;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #ecf0f1;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* 로딩 스피너 */
+        .loading-spinner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 헤더 */
+        .header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .header.scrolled {
+            padding: 0.5rem 0;
+            backdrop-filter: blur(10px);
+            background: rgba(102, 126, 234, 0.9);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* 메인 콘텐츠 */
+        .main-content {
+            margin-top: 80px;
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            background: var(--gradient-2);
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 특징 섹션 */
+        .features {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-3);
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* 아이디어 섹션 */
+        .ideas {
+            padding: 5rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .idea-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .idea-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-1);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .idea-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .idea-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .idea-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gradient-2);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .idea-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            padding-right: 3rem;
+        }
+
+        .idea-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* 통계 섹션 */
+        .stats {
+            padding: 4rem 2rem;
+            background: var(--gradient-3);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* 연락처 섹션 */
+        .contact {
+            padding: 5rem 2rem;
+            background: white;
+            text-align: center;
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            width: 30px;
+        }
+
+        /* 아이디어 제출 폼 */
+        .idea-form {
+            padding: 5rem 2rem;
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+        }
+
+        .submit-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* 푸터 */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .ideas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 스크롤 애니메이션 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 로딩 스피너 -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- 헤더 -->
+    <header class="header" id="header">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠💡</span>
+                바보들의 모임
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home">홈</a></li>
+                    <li><a href="#features">특징</a></li>
+                    <li><a href="#ideas">아이디어</a></li>
+                    <li><a href="#contact">연락처</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+        <!-- 히어로 섹션 -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>바보들의 모임</h1>
+                <p class="hero-subtitle">새롭고 기발한 아이디어의 보고</p>
+                <p class="hero-description">
+                    상상력을 현실로 만드는 곳, 기발한 아이디어와 시나리오를 찾고 계신가요? 
+                    여기에 있습니다!
+                </p>
+            </div>
+        </section>
+
+        <!-- 특징 섹션 -->
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title fade-in">바보들의 특징</h2>
+                <div class="features-grid">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">🎭</div>
+                        <h3>엉뚱한 상상력</h3>
+                        <p>일반적인 사고의 틀을 벗어난 창의적이고 독특한 아이디어를 제공합니다.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">⚡</div>
+                        <h3>번뜩이는 아이디어</h3>
+                        <p>순간적으로 떠오르는 기발한 생각들을 체계적으로 정리하여 제안합니다.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">🌟</div>
+                        <h3>실용적 접근</h3>
+                        <p>단순히 재미있기만 한 것이 아닌, 실제로 적용 가능한 아이디어를 추구합니다.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">😄</div>
+                        <h3>언제나 웃는 마음</h3>
+                        <p>유머와 재치를 잃지 않으며, 즐거운 마음으로 아이디어를 발전시킵니다.</p>
+                    </div>
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">🚀</div>
+                        <h3>AI를 초월하는 상상력</h3>
+                        <p>인공지능도 생각하지 못한 인간만의 독특하고 창의적인 발상을 제공합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 아이디어 섹션 -->
+        <section class="ideas" id="ideas">
+            <div class="container">
+                <h2 class="section-title fade-in">바보들의 아이디어</h2>
+                <div class="ideas-grid">
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">1</div>
+                        <h3>군대에서 기술배워 제대하면 모두가 취업자</h3>
+                        <p>군 복무 기간을 활용한 체계적인 기술 교육으로 전역 후 바로 취업할 수 있는 시스템을 구축하는 아이디어입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">2</div>
+                        <h3>서울대 → 서울 대학원으로</h3>
+                        <p>자유 경쟁체제로 선발해서 실력으로만 승부! 대학 교육의 패러다임을 바꾸는 혁신적인 제안입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">3</div>
+                        <h3>상식이 무너진 패션쇼</h3>
+                        <p>기존의 패션쇼 개념을 완전히 뒤바꾼 색다른 런웨이로 관객들에게 새로운 재미를 선사합니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">4</div>
+                        <h3>마법의 과식 음식</h3>
+                        <p>과식하면 탈이 나서 며칠 동안 먹지 않게 되어 자연스럽게 다이어트가 되는 신개념 음식 아이디어입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">5</div>
+                        <h3>주인은 목적지로 로봇은 주인이 올때까지 차지킴이</h3>
+                        <p>주차 로봇이 차를 지키고 있는 동안 주인은 자유롭게 목적지에서 시간을 보낼 수 있는 스마트 주차 시스템입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">6</div>
+                        <h3>위계질서 바로세우기</h3>
+                        <p>하급생에게 먼저 인사하기를 통해 전통적인 위계질서를 재정립하는 교육적 아이디어입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">7</div>
+                        <h3>동심 아동복 광고</h3>
+                        <p>30-40대 아줌마, 아저씨가 아동복 광고 모델을 하여 동심을 자극하는 독특한 마케팅 전략입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">8</div>
+                        <h3>시간을 파는 가게</h3>
+                        <p>바쁜 현대인들을 위해 시간 자체를 상품으로 판매하는 혁신적인 비즈니스 모델입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">9</div>
+                        <h3>감정 번역기</h3>
+                        <p>말로 표현하기 어려운 복잡한 감정을 다른 사람이 이해할 수 있도록 번역해주는 서비스입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">10</div>
+                        <h3>추억 재현 서비스</h3>
+                        <p>과거의 소중한 추억을 현실에서 다시 체험할 수 있도록 도와주는 맞춤형 서비스입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">11</div>
+                        <h3>실수 보험</h3>
+                        <p>일상생활에서 발생하는 크고 작은 실수들을 보상해주는 새로운 개념의 보험 상품입니다.</p>
+                    </div>
+                    <div class="idea-card fade-in">
+                        <div class="idea-number">12</div>
+                        <h3>꿈 공유 플랫폼</h3>
+                        <p>자신의 꿈을 다른 사람과 공유하고, 꿈 해석과 의미를 함께 찾아가는 소셜 플랫폼입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 통계 섹션 -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item fade-in">
+                        <h3 data-count="12">0</h3>
+                        <p>기발한 아이디어</p>
+                    </div>
+                    <div class="stat-item fade-in">
+                        <h3 data-count="100">0</h3>
+                        <p>창의성 지수</p>
+                    </div>
+                    <div class="stat-item fade-in">
+                        <h3 data-count="365">0</h3>
+                        <p>연중무휴 아이디어</p>
+                    </div>
+                    <div class="stat-item fade-in">
+                        <h3 data-count="∞">0</h3>
+                        <p>무한한 상상력</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 아이디어 제출 폼 -->
+        <section class="idea-form">
+            <div class="container">
+                <div class="form-container">
+                    <h2 class="section-title fade-in" style="color: white;">새로운 아이디어 제안하기</h2>
+                    <form id="ideaSubmissionForm">
+                        <div class="form-group fade-in">
+                            <label for="name">이름</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group fade-in">
+                            <label for="email">이메일</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group fade-in">
+                            <label for="idea">아이디어</label>
+                            <textarea id="idea" name="idea" rows="5" required placeholder="당신의 기발한 아이디어를 알려주세요!"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn fade-in">아이디어 제출하기</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 연락처 섹션 -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2 class="section-title fade-in">연락처</h2>
+                <div class="contact-info fade-in">
+                    <div class="contact-item">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <span>010-7596-1026</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt contact-icon"></i>
+                        <span>02-2212-5757</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span>jumpbabo@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 바보들의 모임. 모든 권리 보유. | 새롭고 기발한 아이디어나 시나리오 등을 찾으세요. 여기에 있습니다!</p>
+        </div>
+    </footer>
+
+    <script>
+        // 로딩 스피너
+        window.addEventListener('load', () => {
+            const spinner = document.getElementById('loadingSpinner');
+            setTimeout(() => {
+                spinner.style.opacity = '0';
+                setTimeout(() => {
+                    spinner.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // 스크롤 헤더 효과
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 스크롤 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // 페이드인 요소들 관찰
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 카운터 애니메이션
+        const animateCounter = (element, target) => {
+            const increment = target / 100;
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (target === '∞') {
+                    element.textContent = '∞';
+                    clearInterval(timer);
+                } else if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 20);
+        };
+
+        // 통계 카운터 애니메이션
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target.querySelector('h3');
+                    const target = counter.getAttribute('data-count');
+                    animateCounter(counter, target);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.querySelectorAll('.stat-item').forEach(item => {
+            statsObserver.observe(item);
+        });
+
+        // 폼 제출
+        document.getElementById('ideaSubmissionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('아이디어 제출이 완료되었습니다! 검토 후 연락드리겠습니다.');
+            e.target.reset();
+        });
+
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

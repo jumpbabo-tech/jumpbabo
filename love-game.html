@@ -22,7 +22,7 @@
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             text-align: center;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
         }
 
@@ -88,15 +88,17 @@
             border: 3px solid #667eea;
             padding: 20px;
             border-radius: 15px;
-            font-size: 3rem;
+            font-size: 2.5rem;
             cursor: pointer;
             transition: all 0.2s;
-            min-width: 80px;
+            min-width: 120px;
+            line-height: 1.2;
         }
 
         .choice-btn:hover {
             background: #667eea;
-            transform: scale(1.1);
+            color: white;
+            transform: scale(1.05);
         }
 
         .result-area {
@@ -109,7 +111,7 @@
         }
 
         .love-message {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #e91e63;
             font-weight: bold;
             animation: pulse 1s infinite;
@@ -117,7 +119,7 @@
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
 
@@ -138,19 +140,20 @@
         }
 
         .flip-card {
-            width: 60px;
-            height: 80px;
+            width: 80px;
+            height: 120px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 3rem;
             font-weight: bold;
             color: white;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.6s;
+            cursor: pointer;
         }
 
         .flip-card.flipped {
@@ -173,326 +176,326 @@
             transform: rotateY(180deg);
         }
 
-        .fate-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0;
+            flex-wrap: wrap;
         }
 
-        .fate-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        .score-card {
+            text-align: center;
+            padding: 15px;
+            color: white;
+            border-radius: 15px;
+            min-width: 150px;
         }
 
-        .fate-card.selected {
-            border: 3px solid #ff6b6b;
-            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        .player-score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .computer-score {
+            background: linear-gradient(135deg, #e91e63 0%, #f06292 100%);
         }
     </style>
 </head>
 <body>
     <div class="game-container">
         <div class="title">💕 사랑해 게임 💕</div>
-        <div class="subtitle">단계별로 더 깊은 마음을 전해보세요!</div>
+        <div class="subtitle">연인끼리 5점을 먼저 달성해서 승리하고 "사랑해"를 외쳐보세요!</div>
         
         <!-- 게임 모드 선택 -->
         <div class="game-mode-buttons">
-            <button class="mode-btn" onclick="selectMode('level1')">1단계 (기본)</button>
-            <button class="mode-btn" onclick="selectMode('level4')">4단계 (운명의카드)</button>
+            <button class="mode-btn" onclick="selectMode('rps')">🎮 가위바위보</button>
+            <button class="mode-btn" onclick="selectMode('dice')">🎲 주사위 게임</button>
+            <button class="mode-btn" onclick="selectMode('card')">🃏 카드 게임</button>
         </div>
         
-        <!-- 소리 조절 -->
-        <div style="text-align: center; margin: 15px 0; padding: 10px; background: #e3f2fd; border-radius: 10px;">
-            <div style="font-weight: bold; color: #1976d2; margin-bottom: 10px;">🔊 음성 설정</div>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <label style="display: flex; align-items: center; gap: 5px;">
-                    <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
-                    <span>음성 안내 켜기</span>
-                </label>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span>속도:</span>
-                    <input type="range" id="speedSlider" min="0.5" max="1.5" step="0.1" value="0.8" onchange="updateSpeechSettings()" style="width: 100px;">
-                    <span id="speedValue">0.8</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span>음높이:</span>
-                    <input type="range" id="pitchSlider" min="0.5" max="2" step="0.1" value="1.1" onchange="updateSpeechSettings()" style="width: 100px;">
-                    <span id="pitchValue">1.1</span>
+        <!-- 게임 설정 -->
+        <div style="text-align: center; margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+            <!-- 뒤집기 방식 선택 -->
+            <div style="margin-bottom: 15px; padding: 10px; background: #fff3cd; border-radius: 8px;">
+                <div style="font-weight: bold; color: #856404; margin-bottom: 10px;">🎭 뒤집기 방식 선택</div>
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                        <input type="radio" name="flipMode" value="simultaneous" checked onchange="updateFlipMode()">
+                        <span>🎭 동시에 뒤집기</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                        <input type="radio" name="flipMode" value="sequential" onchange="updateFlipMode()">
+                        <span>⏰ 순서대로 뒤집기</span>
+                    </label>
                 </div>
             </div>
-        </div>
-
-        <!-- 1단계 게임 -->
-        <div id="level1-game" class="game-area">
-            <div class="choices">
-                <button class="choice-btn" onclick="playRPS('rock')">✊</button>
-                <button class="choice-btn" onclick="playRPS('paper')">✋</button>
-                <button class="choice-btn" onclick="playRPS('scissors')">✌️</button>
-            </div>
-            <div class="result-area" id="level1-result"></div>
-            <button class="reset-btn" onclick="resetLevel1()">다시 하기</button>
-        </div>
-
-        <!-- 4단계: 운명의 카드 게임 -->
-        <div id="fate-game" class="game-area">
-            <div style="text-align: center; margin: 20px 0;">
-                <div style="font-size: 1.3rem; font-weight: bold; color: #e91e63; margin-bottom: 15px;">
-                    🎴 운명의 연속승부 🎴
-                </div>
-                <div style="color: #666; margin-bottom: 20px;">
-                    승리하면 +1점, 패배하면 -1점! 먼저 5점에 도달하세요!
-                </div>
-                
-                <!-- 보상 미리보기 -->
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 20px 0; font-size: 0.9rem;">
-                    <div style="font-weight: bold; color: #333; margin-bottom: 10px;">🎯 점수별 보상:</div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; text-align: left;">
-                        <div>1점: "고마워"</div>
-                        <div>2점: "좋아해"</div>
-                        <div>3점: "<strong>소중해, 함께 있어서 행복해</strong>"</div>
-                        <div>4점: "너는 특별한 사람이야"</div>
-                        <div style="color: #e91e63; font-weight: bold;">5점: "🎉 사랑해, 영원히 함께하자! 🎉"</div>
+            
+            <!-- 음성 설정 -->
+            <div style="padding: 10px; background: #e3f2fd; border-radius: 8px;">
+                <div style="font-weight: bold; color: #1976d2; margin-bottom: 10px;">🔊 음성 설정</div>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
+                        <span>음성 안내 켜기</span>
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span>속도:</span>
+                        <input type="range" id="speedSlider" min="0.5" max="1.5" step="0.1" value="0.8" onchange="updateSpeechSettings()" style="width: 100px;">
+                        <span id="speedValue">0.8</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span>음높이:</span>
+                        <input type="range" id="pitchSlider" min="0.5" max="2" step="0.1" value="1.1" onchange="updateSpeechSettings()" style="width: 100px;">
+                        <span id="pitchValue">1.1</span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- 점수판 -->
-            <div style="display: flex; justify-content: center; gap: 40px; margin: 20px 0; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; min-width: 180px;">
+        <!-- 가위바위보 게임 -->
+        <div id="rps-game" class="game-area">
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="font-size: 1.3rem; font-weight: bold; color: #e91e63; margin-bottom: 15px;">
+                    🎮 가위바위보 대결
+                </div>
+                <div style="color: #666; margin-bottom: 20px;">
+                    6장의 카드 중 하나씩 선택해서 가위바위보! 5점을 먼저 달성하고 "사랑해"를 외치세요!
+                </div>
+            </div>
+
+            <div class="score-board">
+                <div class="score-card player-score">
                     <div style="font-weight: bold; margin-bottom: 5px;">플레이어 1</div>
-                    <div style="font-size: 1.5rem; margin-bottom: 5px;" id="fate-player1-wins">0</div>
+                    <div style="font-size: 1.5rem;" id="rps-player1-score">0</div>
                     <div style="font-size: 0.9rem;">점수</div>
-                    <div style="margin-top: 10px; font-size: 0.8rem; opacity: 0.8;" id="fate-player1-progress">🔹🔹🔹🔹🔹</div>
                 </div>
-                <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #e91e63 0%, #f06292 100%); color: white; border-radius: 15px; min-width: 180px;">
+                <div class="score-card computer-score">
                     <div style="font-weight: bold; margin-bottom: 5px;">플레이어 2</div>
-                    <div style="font-size: 1.5rem; margin-bottom: 5px;" id="fate-player2-wins">0</div>
+                    <div style="font-size: 1.5rem;" id="rps-player2-score">0</div>
                     <div style="font-size: 0.9rem;">점수</div>
-                    <div style="margin-top: 10px; font-size: 0.8rem; opacity: 0.8;" id="fate-player2-progress">🔹🔹🔹🔹🔹</div>
                 </div>
             </div>
 
-            <!-- 현재 라운드 정보 -->
-            <div style="text-align: center; margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px;">
-                <div style="font-weight: bold; color: #333; margin-bottom: 5px;">라운드 <span id="current-round">1</span></div>
-                <div style="color: #666;" id="round-info">첫 번째 대결을 시작하세요!</div>
-            </div>
-
-            <!-- 카드 선택 영역 -->
-            <div style="text-align: center; margin: 30px 0;">
+            <!-- 6장의 가위바위보 카드 -->
+            <div style="text-align: center; margin: 20px 0;">
                 <div style="font-size: 1.1rem; font-weight: bold; color: #333; margin-bottom: 20px;">
                     6장의 카드 중에서 각자 하나씩 선택하세요
                 </div>
                 
-                <!-- 6장의 카드가 한 줄로 배치 -->
                 <div style="display: flex; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap;">
-                    <div class="flip-card fate-card" onclick="selectFateCard('all', 0)">
+                    <div class="flip-card" onclick="selectRPSCard(0)" id="rps-card-0">
                         <div class="flip-card-front">🎴</div>
-                        <div class="flip-card-back" id="fate-card-0">❓</div>
+                        <div class="flip-card-back">?</div>
                     </div>
-                    <div class="flip-card fate-card" onclick="selectFateCard('all', 1)">
+                    <div class="flip-card" onclick="selectRPSCard(1)" id="rps-card-1">
                         <div class="flip-card-front">🎴</div>
-                        <div class="flip-card-back" id="fate-card-1">❓</div>
+                        <div class="flip-card-back">?</div>
                     </div>
-                    <div class="flip-card fate-card" onclick="selectFateCard('all', 2)">
+                    <div class="flip-card" onclick="selectRPSCard(2)" id="rps-card-2">
                         <div class="flip-card-front">🎴</div>
-                        <div class="flip-card-back" id="fate-card-2">❓</div>
+                        <div class="flip-card-back">?</div>
                     </div>
-                    <div class="flip-card fate-card" onclick="selectFateCard('all', 3)">
+                    <div class="flip-card" onclick="selectRPSCard(3)" id="rps-card-3">
                         <div class="flip-card-front">🎴</div>
-                        <div class="flip-card-back" id="fate-card-3">❓</div>
+                        <div class="flip-card-back">?</div>
                     </div>
-                    <div class="flip-card fate-card" onclick="selectFateCard('all', 4)">
+                    <div class="flip-card" onclick="selectRPSCard(4)" id="rps-card-4">
                         <div class="flip-card-front">🎴</div>
-                        <div class="flip-card-back" id="fate-card-4">❓</div>
+                        <div class="flip-card-back">?</div>
                     </div>
-                    <div class="flip-card fate-card" onclick="selectFateCard('all', 5)">
+                    <div class="flip-card" onclick="selectRPSCard(5)" id="rps-card-5">
                         <div class="flip-card-front">🎴</div>
-                        <div class="flip-card-back" id="fate-card-5">❓</div>
+                        <div class="flip-card-back">?</div>
                     </div>
                 </div>
 
                 <!-- 선택 상태 표시 -->
                 <div style="display: flex; justify-content: center; gap: 40px; margin: 20px 0;">
-                    <div style="color: #667eea; font-weight: bold;" id="fate-player1-status">플레이어 1: 차례를 기다리세요</div>
-                    <div style="color: #e91e63; font-weight: bold;" id="fate-player2-status">플레이어 2: 차례를 기다리세요</div>
+                    <div style="color: #667eea; font-weight: bold;" id="rps-player1-status">플레이어 1: 카드를 선택하세요</div>
+                    <div style="color: #e91e63; font-weight: bold;" id="rps-player2-status">플레이어 2: 카드를 선택하세요</div>
                 </div>
                 
                 <!-- 현재 차례 안내 -->
-                <div style="text-align: center; margin: 15px 0; padding: 10px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
-                    <div style="font-weight: bold; color: #856404;" id="turn-indicator">첫 라운드: 플레이어 1부터 시작!</div>
+                <div style="text-align: center; margin: 15px 0; padding: 10px; background: #fff3cd; border-radius: 8px;">
+                    <div style="font-weight: bold; color: #856404;" id="rps-turn-indicator">플레이어 1부터 선택해주세요!</div>
                 </div>
             </div>
 
-            <!-- 동시에 뒤집기 버튼 -->
+            <!-- 뒤집기 버튼 -->
             <div style="text-align: center; margin: 30px 0;">
-                <button class="reset-btn" onclick="revealFateCards()" id="fate-reveal-btn" style="font-size: 1.3rem; padding: 15px 30px; background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);" disabled>
-                    🎭 운명을 확인하세요!
+                <button class="reset-btn" onclick="revealRPSCards()" id="rps-reveal-btn" style="font-size: 1.3rem; padding: 15px 30px;" disabled>
+                    🎭 뒤집기!
                 </button>
             </div>
 
-            <div class="result-area" id="fate-result"></div>
-            <button class="reset-btn" onclick="resetFateGame()">새로운 운명</button>
+            <div class="result-area" id="rps-result"></div>
+            <button class="reset-btn" onclick="resetRPS()">게임 리셋</button>
+        </div>
+
+        <!-- 주사위 게임 -->
+        <div id="dice-game" class="game-area">
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="font-size: 1.3rem; font-weight: bold; color: #e91e63; margin-bottom: 15px;">
+                    🎲 주사위 대결
+                </div>
+                <div style="color: #666; margin-bottom: 20px;">
+                    각자 주사위를 던져서 더 높은 숫자가 나오면 승리! 5점을 먼저 달성하고 "사랑해"를 외치세요!
+                </div>
+            </div>
+
+            <div class="score-board">
+                <div class="score-card player-score">
+                    <div style="font-weight: bold; margin-bottom: 5px;">플레이어 1</div>
+                    <div style="font-size: 1.5rem;" id="dice-player1-score">0</div>
+                    <div style="font-size: 0.9rem;">점수</div>
+                </div>
+                <div class="score-card computer-score">
+                    <div style="font-weight: bold; margin-bottom: 5px;">플레이어 2</div>
+                    <div style="font-size: 1.5rem;" id="dice-player2-score">0</div>
+                    <div style="font-size: 0.9rem;">점수</div>
+                </div>
+            </div>
+
+            <!-- 주사위 영역 -->
+            <div style="display: flex; justify-content: center; gap: 50px; margin: 30px 0; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-weight: bold; color: #667eea; margin-bottom: 10px;">플레이어 1</div>
+                    <div id="player1-dice" style="font-size: 4rem; margin: 20px 0; min-height: 80px;">🎲</div>
+                    <div id="player1-dice-number" style="font-size: 1.2rem; font-weight: bold;">?</div>
+                    <button class="choice-btn" onclick="rollPlayer1Dice()" style="font-size: 1rem; padding: 10px 20px; margin-top: 10px;">
+                        🎲 던지기
+                    </button>
+                </div>
+                <div style="display: flex; align-items: center; font-size: 2rem; font-weight: bold; color: #666;">
+                    VS
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-weight: bold; color: #e91e63; margin-bottom: 10px;">플레이어 2</div>
+                    <div id="player2-dice" style="font-size: 4rem; margin: 20px 0; min-height: 80px;">🎲</div>
+                    <div id="player2-dice-number" style="font-size: 1.2rem; font-weight: bold;">?</div>
+                    <button class="choice-btn" onclick="rollPlayer2Dice()" style="font-size: 1rem; padding: 10px 20px; margin-top: 10px;">
+                        🎲 던지기
+                    </button>
+                </div>
+            </div>
+
+            <!-- 결과 확인 버튼 -->
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="reset-btn" onclick="compareDice()" id="dice-compare-btn" style="font-size: 1.3rem; padding: 15px 30px;" disabled>
+                    🎭 동시에 뒤집기!
+                </button>
+            </div>
+            <div class="result-area" id="dice-result"></div>
+            <button class="reset-btn" onclick="resetDice()">게임 리셋</button>
+        </div>
+
+        <!-- 카드 게임 -->
+        <div id="card-game" class="game-area">
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="font-size: 1.3rem; font-weight: bold; color: #e91e63; margin-bottom: 15px;">
+                    🃏 카드 대결
+                </div>
+                <div style="color: #666; margin-bottom: 20px;">
+                    13장의 카드 중에서 각자 하나씩 선택! 더 높은 카드가 승리! 5점을 먼저 달성하고 "사랑해"를 외치세요!
+                </div>
+            </div>
+
+            <div class="score-board">
+                <div class="score-card player-score">
+                    <div style="font-weight: bold; margin-bottom: 5px;">플레이어 1</div>
+                    <div style="font-size: 1.5rem;" id="card-player1-score">0</div>
+                    <div style="font-size: 0.9rem;">점수</div>
+                </div>
+                <div class="score-card computer-score">
+                    <div style="font-weight: bold; margin-bottom: 5px;">플레이어 2</div>
+                    <div style="font-size: 1.5rem;" id="card-player2-score">0</div>
+                    <div style="font-size: 0.9rem;">점수</div>
+                </div>
+            </div>
+
+            <!-- 13장의 카드 -->
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="font-size: 1.1rem; font-weight: bold; color: #333; margin-bottom: 20px;">
+                    13장의 카드 중에서 각자 하나씩 선택하세요 (A=1, J=11, Q=12, K=13)
+                </div>
+                
+                <div id="card-container" style="display: flex; justify-content: center; gap: 8px; margin: 20px 0; flex-wrap: wrap;">
+                    <!-- 카드들이 JavaScript로 동적 생성됩니다 -->
+                </div>
+
+                <!-- 선택 상태 표시 -->
+                <div style="display: flex; justify-content: center; gap: 40px; margin: 20px 0;">
+                    <div style="color: #667eea; font-weight: bold;" id="card-player1-status">플레이어 1: 카드를 선택하세요</div>
+                    <div style="color: #e91e63; font-weight: bold;" id="card-player2-status">플레이어 2: 카드를 선택하세요</div>
+                </div>
+                
+                <!-- 현재 차례 안내 -->
+                <div style="text-align: center; margin: 15px 0; padding: 10px; background: #fff3cd; border-radius: 8px;">
+                    <div style="font-weight: bold; color: #856404;" id="card-turn-indicator">플레이어 1부터 선택해주세요!</div>
+                </div>
+            </div>
+
+            <!-- 뒤집기 버튼 -->
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="reset-btn" onclick="revealCards()" id="card-reveal-btn" style="font-size: 1.3rem; padding: 15px 30px;" disabled>
+                    🎭 뒤집기!
+                </button>
+            </div>
+            <div class="result-area" id="card-result"></div>
+            <button class="reset-btn" onclick="resetCard()">게임 리셋</button>
         </div>
     </div>
 
     <script>
         // 게임 변수들
-        let fatePlayer1Selected = null;
-        let fatePlayer2Selected = null;
-        let fateCards = [];
-        let fateRevealed = false;
-        let fatePlayer1Wins = 0;
-        let fatePlayer2Wins = 0;
-        let fateCurrentRound = 1;
-        let fateTargetWins = 5;
-        let lastWinner = null; // 마지막 승자 (다음 라운드에서 진 사람이 먼저 선택)
+        let rpsPlayer1Score = 0;
+        let rpsPlayer2Score = 0;
+        let dicePlayer1Score = 0;
+        let dicePlayer2Score = 0;
+        let cardPlayer1Score = 0;
+        let cardPlayer2Score = 0;
+        let targetScore = 5;
+        
+        // 가위바위보 게임 변수들
+        let rpsPlayer1Selected = null;
+        let rpsPlayer2Selected = null;
+        let rpsCards = [];
+        let rpsRevealed = false;
+        
+        // 주사위 게임 변수들
+        let player1DiceRoll = null;
+        let player2DiceRoll = null;
+        
+        // 카드 게임 변수들
+        let cardPlayer1Selected = null;
+        let cardPlayer2Selected = null;
+        let cardRevealed = false;
         
         // 음성 설정 변수들
         let soundEnabled = true;
         let speechRate = 0.8;
         let speechPitch = 1.1;
+        
+        // 뒤집기 방식 설정
+        let flipMode = 'simultaneous'; // 'simultaneous' 또는 'sequential'
+        
+        // 선택 순서 관리 (1 = 플레이어1 먼저, 2 = 플레이어2 먼저)
+        let rpsFirstPlayer = 1;
+        let diceFirstPlayer = 1;
+        let cardFirstPlayer = 1;
 
-        // 점수에 따른 특별 보상들 (실제로 말해야 하는 문구)
-        const fateRewards = {
-            1: "고마워",
-            2: "좋아해", 
-            3: "소중해, 함께 있어서 행복해",
-            4: "너는 특별한 사람이야",
-            5: "🎉 최종 승리! 사랑해, 영원히 함께하자! 🎉"
-        };
-
-        function selectMode(mode) {
-            // 모든 버튼 비활성화
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            
-            // 선택된 버튼 활성화
-            event.target.classList.add('active');
-            
-            // 모든 게임 영역 숨기기
-            document.querySelectorAll('.game-area').forEach(area => area.classList.remove('active'));
-            
-            if (mode === 'level1') {
-                document.getElementById('level1-game').classList.add('active');
-            } else if (mode === 'level4') {
-                document.getElementById('fate-game').classList.add('active');
-                startFateGame();
-            }
-        }
-
-        // 1단계 게임
-        function playRPS(playerChoice) {
-            const choices = ['rock', 'paper', 'scissors'];
-            const choiceEmojis = { rock: '✊', paper: '✋', scissors: '✌️' };
-            const choiceNames = { rock: '바위', paper: '보', scissors: '가위' };
-            
-            const computerChoice = choices[Math.floor(Math.random() * 3)];
-            
-            let result = '';
-            if (playerChoice === computerChoice) {
-                result = '무승부!';
-            } else if (
-                (playerChoice === 'rock' && computerChoice === 'scissors') ||
-                (playerChoice === 'paper' && computerChoice === 'rock') ||
-                (playerChoice === 'scissors' && computerChoice === 'paper')
-            ) {
-                result = '당신이 이겼어요!';
-            } else {
-                result = '컴퓨터가 이겼어요!';
-            }
-            
-            document.getElementById('level1-result').innerHTML = `
-                <div>당신: ${choiceEmojis[playerChoice]} vs 컴퓨터: ${choiceEmojis[computerChoice]}</div>
-                <div style="margin: 10px 0; font-weight: bold;">${result}</div>
-                ${result.includes('당신이 이겼어요') ? '<div class="love-message">🎉 상대방이 "좋아해"라고 말해야 해요! 💕</div>' : ''}
-                ${result.includes('컴퓨터가 이겼어요') ? '<div class="love-message">😅 당신이 "좋아해"라고 말해야 해요! 💕</div>' : ''}
-            `;
-        }
-
-        function resetLevel1() {
-            document.getElementById('level1-result').innerHTML = '';
-        }
-
-        // 4단계 운명의 카드 게임 함수들
-        function startFateGame() {
-            // 게임 초기화
-            fatePlayer1Wins = 0;
-            fatePlayer2Wins = 0;
-            fateCurrentRound = 1;
-            
-            updateFateDisplay();
-            startNewFateRound();
-        }
-
-        function startNewFateRound() {
-            // 순수 가위바위보만 사용
-            const rpsOptions = [
-                { emoji: '✊', name: '바위', type: 'rps' },
-                { emoji: '✋', name: '보', type: 'rps' },
-                { emoji: '✌️', name: '가위', type: 'rps' }
-            ];
-            
-            // 6장의 카드를 랜덤하게 배치 (가위바위보만)
-            fateCards = [];
-            for (let i = 0; i < 6; i++) {
-                const randomCard = rpsOptions[Math.floor(Math.random() * rpsOptions.length)];
-                fateCards.push(randomCard);
-            }
-            
-            // 카드에 내용 설정 (보이지 않게)
-            for (let i = 0; i < 6; i++) {
-                document.getElementById(`fate-card-${i}`).textContent = fateCards[i].emoji;
-            }
-            
-            resetFateSelection();
-            document.getElementById('fate-result').innerHTML = '';
-        }
-
-        function updateFateDisplay() {
-            document.getElementById('fate-player1-wins').textContent = fatePlayer1Wins;
-            document.getElementById('fate-player2-wins').textContent = fatePlayer2Wins;
-            document.getElementById('current-round').textContent = fateCurrentRound;
-            
-            // 진행 상황 시각적 표시
-            updateProgressBar('fate-player1-progress', fatePlayer1Wins);
-            updateProgressBar('fate-player2-progress', fatePlayer2Wins);
-            
-            // 라운드 정보 업데이트
-            let roundInfo = '';
-            if (fatePlayer1Wins === 0 && fatePlayer2Wins === 0) {
-                roundInfo = '🎯 첫 번째 대결! 연속승을 시작하세요!';
-            } else {
-                const maxWins = Math.max(fatePlayer1Wins, fatePlayer2Wins);
-                if (maxWins === 1) {
-                    roundInfo = '🔥 1승! 연속승이 시작되었어요! 계속 이기면 더 큰 보상이!';
-                } else if (maxWins === 2) {
-                    roundInfo = '⚡ 2승! 한 번만 더 이기면 최종 승리! 긴장하세요!';
-                } else {
-                    roundInfo = '🏆 누군가 3승에 가까워지고 있어요!';
-                }
-            }
-            document.getElementById('round-info').innerHTML = roundInfo;
-        }
-
-        function updateProgressBar(elementId, wins) {
-            const progressElement = document.getElementById(elementId);
-            let progress = '';
-            for (let i = 0; i < 5; i++) {
-                if (i < wins) {
-                    progress += '🔥'; // 달성한 단계
-                } else {
-                    progress += '🔹'; // 미달성 단계
-                }
-            }
-            progressElement.textContent = progress;
-        }
+        // 카드 덱 (A=1, J=11, Q=12, K=13)
+        const cardSuits = ['♠', '♥', '♦', '♣'];
+        const cardValueNames = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        const cardNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
         // 음성 합성으로 텍스트를 소리내어 읽기
         function speakText(text) {
             if (soundEnabled && 'speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'ko-KR'; // 한국어 설정
-                utterance.rate = speechRate; // 속도 조절
-                utterance.pitch = speechPitch; // 음높이 조절
+                utterance.lang = 'ko-KR';
+                utterance.rate = speechRate;
+                utterance.pitch = speechPitch;
                 speechSynthesis.speak(utterance);
             }
         }
@@ -501,7 +504,6 @@
         function toggleSound() {
             soundEnabled = document.getElementById('soundToggle').checked;
             if (!soundEnabled) {
-                // 현재 재생 중인 음성 중지
                 speechSynthesis.cancel();
             }
         }
@@ -509,228 +511,829 @@
         function updateSpeechSettings() {
             speechRate = parseFloat(document.getElementById('speedSlider').value);
             speechPitch = parseFloat(document.getElementById('pitchSlider').value);
-            
-            // 슬라이더 값 표시 업데이트
             document.getElementById('speedValue').textContent = speechRate;
             document.getElementById('pitchValue').textContent = speechPitch;
         }
-
-        function selectFateCard(player, cardIndex) {
-            if (fateRevealed) return;
+        
+        // 뒤집기 방식 업데이트
+        function updateFlipMode() {
+            const selectedMode = document.querySelector('input[name="flipMode"]:checked').value;
+            flipMode = selectedMode;
             
-            // 이미 선택된 카드인지 확인
-            if (fatePlayer1Selected === cardIndex || fatePlayer2Selected === cardIndex) {
-                return; // 이미 선택된 카드는 선택할 수 없음
-            }
+            // 버튼 텍스트 업데이트
+            updateRevealButtonTexts();
             
-            // 차례 확인 (첫 라운드는 플레이어1, 이후는 진 사람이 먼저)
-            let firstPlayer = getFirstPlayer();
+            // 모든 게임 상태 리셋
+            resetRPS();
+            resetDice();
+            resetCard();
+        }
+        
+        // 뒤집기 버튼 텍스트 업데이트
+        function updateRevealButtonTexts() {
+            const rpsBtn = document.getElementById('rps-reveal-btn');
+            const cardBtn = document.getElementById('card-reveal-btn');
+            const diceBtn = document.getElementById('dice-compare-btn');
             
-            if (fatePlayer1Selected === null && fatePlayer2Selected === null) {
-                // 첫 번째 선택자
-                if (firstPlayer === 'player1') {
-                    fatePlayer1Selected = cardIndex;
-                    document.querySelector(`#fate-card-${cardIndex}`).parentElement.classList.add('selected');
-                    document.querySelector(`#fate-card-${cardIndex}`).parentElement.style.border = '3px solid #667eea';
-                    document.getElementById('fate-player1-status').textContent = '플레이어 1: 선택 완료!';
-                    document.getElementById('fate-player2-status').textContent = '플레이어 2: 카드를 선택하세요';
-                    document.getElementById('turn-indicator').textContent = '플레이어 2의 차례입니다!';
-                } else {
-                    fatePlayer2Selected = cardIndex;
-                    document.querySelector(`#fate-card-${cardIndex}`).parentElement.classList.add('selected');
-                    document.querySelector(`#fate-card-${cardIndex}`).parentElement.style.border = '3px solid #e91e63';
-                    document.getElementById('fate-player2-status').textContent = '플레이어 2: 선택 완료!';
-                    document.getElementById('fate-player1-status').textContent = '플레이어 1: 카드를 선택하세요';
-                    document.getElementById('turn-indicator').textContent = '플레이어 1의 차례입니다!';
-                }
+            if (flipMode === 'simultaneous') {
+                rpsBtn.innerHTML = '🎭 동시에 뒤집기!';
+                cardBtn.innerHTML = '🎭 동시에 뒤집기!';
+                diceBtn.innerHTML = '🎭 동시에 뒤집기!';
             } else {
-                // 두 번째 선택자
-                if (fatePlayer1Selected === null) {
-                    fatePlayer1Selected = cardIndex;
-                    document.querySelector(`#fate-card-${cardIndex}`).parentElement.classList.add('selected');
-                    document.querySelector(`#fate-card-${cardIndex}`).parentElement.style.border = '3px solid #667eea';
-                    document.getElementById('fate-player1-status').textContent = '플레이어 1: 선택 완료!';
-                } else {
-                    fatePlayer2Selected = cardIndex;
-                    document.querySelector(`#fate-card-${cardIndex}`).parentElement.classList.add('selected');
-                    document.querySelector(`#fate-card-${cardIndex}`).parentElement.style.border = '3px solid #e91e63';
-                    document.getElementById('fate-player2-status').textContent = '플레이어 2: 선택 완료!';
-                }
-                
-                // 둘 다 선택했으면 뒤집기 버튼 활성화
-                document.getElementById('fate-reveal-btn').disabled = false;
-                document.getElementById('fate-reveal-btn').style.opacity = '1';
-                document.getElementById('fate-reveal-btn').style.cursor = 'pointer';
-                document.getElementById('turn-indicator').textContent = '모든 선택 완료! 운명을 확인하세요!';
+                rpsBtn.innerHTML = '⏰ 순서대로 뒤집기!';
+                cardBtn.innerHTML = '⏰ 순서대로 뒤집기!';
+                diceBtn.innerHTML = '⏰ 순서대로 뒤집기!';
             }
         }
 
-        function getFirstPlayer() {
-            // 첫 라운드는 플레이어 1이 먼저, 이후는 진 사람이 먼저
-            if (fateCurrentRound === 1) {
-                return 'player1';
-            } else {
-                // 마지막에 진 사람이 먼저 (lastWinner의 반대)
-                return lastWinner === 'player1' ? 'player2' : 'player1';
+        // 게임 모드 선택
+        function selectMode(mode) {
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.game-area').forEach(area => area.classList.remove('active'));
+            document.getElementById(mode + '-game').classList.add('active');
+        }
+
+        // 승리 체크 함수
+        function checkWin(player1Score, player2Score, gameType) {
+            if (player1Score >= targetScore) {
+                document.getElementById(gameType + '-result').innerHTML = `
+                    <div class="love-message">🎉 플레이어 1 승리! 🎉<br>💕 "사랑해!" 💕</div>
+                `;
+                speakText('플레이어 1 승리! 사랑해!');
+                return true;
+            } else if (player2Score >= targetScore) {
+                document.getElementById(gameType + '-result').innerHTML = `
+                    <div class="love-message">🎉 플레이어 2 승리! 🎉<br>💕 "사랑해!" 💕</div>
+                `;
+                speakText('플레이어 2 승리! 사랑해!');
+                return true;
             }
+            return false;
         }
 
-        function revealFateCards() {
-            if (fatePlayer1Selected === null || fatePlayer2Selected === null) return;
+        // 가위바위보 게임
+        function playRPS(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const choiceEmojis = { rock: '✊', paper: '✋', scissors: '✌️' };
+            const choiceNames = { rock: '바위', paper: '보', scissors: '가위' };
             
-            fateRevealed = true;
-            
-            // 선택된 카드들만 뒤집기
-            document.querySelector(`#fate-card-${fatePlayer1Selected}`).parentElement.classList.add('flipped');
-            document.querySelector(`#fate-card-${fatePlayer2Selected}`).parentElement.classList.add('flipped');
-            
-            // 결과 계산
-            setTimeout(() => {
-                calculateFateResult();
-            }, 600);
-        }
-
-        function calculateFateResult() {
-            const player1Card = fateCards[fatePlayer1Selected];
-            const player2Card = fateCards[fatePlayer2Selected];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
             
             let result = '';
             let winner = '';
             
-            // 순수 가위바위보 처리
-            if (player1Card.name === player2Card.name) {
-                result = '무승부! 다시 도전하세요!';
+            if (playerChoice === computerChoice) {
+                result = '무승부!';
                 winner = 'draw';
             } else if (
-                (player1Card.name === '바위' && player2Card.name === '가위') ||
-                (player1Card.name === '보' && player2Card.name === '바위') ||
-                (player1Card.name === '가위' && player2Card.name === '보')
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result = '플레이어 승리!';
+                winner = 'player';
+                rpsPlayerScore = Math.min(targetScore, rpsPlayerScore + 1);
+                rpsComputerScore = Math.max(0, rpsComputerScore - 1);
+            } else {
+                result = '컴퓨터 승리!';
+                winner = 'computer';
+                rpsComputerScore = Math.min(targetScore, rpsComputerScore + 1);
+                rpsPlayerScore = Math.max(0, rpsPlayerScore - 1);
+            }
+            
+            document.getElementById('rps-player-score').textContent = rpsPlayerScore;
+            document.getElementById('rps-computer-score').textContent = rpsComputerScore;
+            
+            if (!checkWin(rpsPlayerScore, rpsComputerScore, 'rps')) {
+                document.getElementById('rps-result').innerHTML = `
+                    <div>플레이어: ${choiceEmojis[playerChoice]} vs 컴퓨터: ${choiceEmojis[computerChoice]}</div>
+                    <div style="margin: 10px 0; font-weight: bold;">${result}</div>
+                    <div style="font-size: 1rem; color: #666;">
+                        ${winner === 'player' ? '플레이어 +1점, 컴퓨터 -1점' : 
+                          winner === 'computer' ? '컴퓨터 +1점, 플레이어 -1점' : '점수 변화 없음'}
+                    </div>
+                `;
+            }
+        }
+
+        // 가위바위보 카드 선택
+        function selectRPSCard(cardIndex) {
+            if (rpsRevealed) return; // 이미 뒤집힌 상태면 무시
+            
+            // 첫 번째 선택자 결정
+            if (rpsPlayer1Selected === null && rpsPlayer2Selected === null) {
+                if (rpsFirstPlayer === 1) {
+                    // 플레이어 1이 먼저 선택
+                    rpsPlayer1Selected = cardIndex;
+                    document.getElementById('rps-player1-status').textContent = '플레이어 1: 카드 선택 완료!';
+                    document.getElementById('rps-turn-indicator').textContent = '플레이어 2가 선택해주세요!';
+                    
+                    // 선택 표시
+                    const card = document.getElementById(`rps-card-${cardIndex}`);
+                    if (flipMode === 'sequential') {
+                        card.classList.add('flipped');
+                        const rpsChoices = ['✊', '✋', '✌️'];
+                        const choice = rpsChoices[Math.floor(Math.random() * 3)];
+                        card.querySelector('.flip-card-back').textContent = choice;
+                        rpsCards[cardIndex] = choice;
+                    } else {
+                        // 동시 뒤집기 모드에서는 선택 표시만
+                        card.querySelector('.flip-card-front').textContent = '🎯';
+                        const rpsChoices = ['✊', '✋', '✌️'];
+                        const choice = rpsChoices[Math.floor(Math.random() * 3)];
+                        rpsCards[cardIndex] = choice;
+                    }
+                } else {
+                    // 플레이어 2가 먼저 선택
+                    rpsPlayer2Selected = cardIndex;
+                    document.getElementById('rps-player2-status').textContent = '플레이어 2: 카드 선택 완료!';
+                    document.getElementById('rps-turn-indicator').textContent = '플레이어 1이 선택해주세요!';
+                    
+                    // 선택 표시
+                    const card = document.getElementById(`rps-card-${cardIndex}`);
+                    if (flipMode === 'sequential') {
+                        card.classList.add('flipped');
+                        const rpsChoices = ['✊', '✋', '✌️'];
+                        const choice = rpsChoices[Math.floor(Math.random() * 3)];
+                        card.querySelector('.flip-card-back').textContent = choice;
+                        rpsCards[cardIndex] = choice;
+                    } else {
+                        // 동시 뒤집기 모드에서는 선택 표시만
+                        card.querySelector('.flip-card-front').textContent = '🎯';
+                        const rpsChoices = ['✊', '✋', '✌️'];
+                        const choice = rpsChoices[Math.floor(Math.random() * 3)];
+                        rpsCards[cardIndex] = choice;
+                    }
+                }
+            } else {
+                // 두 번째 선택자
+                if (rpsPlayer1Selected === null) {
+                    // 플레이어 1이 두 번째로 선택
+                    rpsPlayer1Selected = cardIndex;
+                    document.getElementById('rps-player1-status').textContent = '플레이어 1: 카드 선택 완료!';
+                } else {
+                    // 플레이어 2가 두 번째로 선택
+                    rpsPlayer2Selected = cardIndex;
+                    document.getElementById('rps-player2-status').textContent = '플레이어 2: 카드 선택 완료!';
+                }
+                
+                // 선택 표시
+                const card = document.getElementById(`rps-card-${cardIndex}`);
+                if (flipMode === 'sequential') {
+                    card.classList.add('flipped');
+                    const rpsChoices = ['✊', '✋', '✌️'];
+                    const choice = rpsChoices[Math.floor(Math.random() * 3)];
+                    card.querySelector('.flip-card-back').textContent = choice;
+                    rpsCards[cardIndex] = choice;
+                    
+                    // 자동으로 결과 계산
+                    setTimeout(() => {
+                        calculateRPSResult();
+                    }, 1000);
+                } else {
+                    // 동시 뒤집기 모드에서는 선택 표시만
+                    card.querySelector('.flip-card-front').textContent = '🎯';
+                    const rpsChoices = ['✊', '✋', '✌️'];
+                    const choice = rpsChoices[Math.floor(Math.random() * 3)];
+                    rpsCards[cardIndex] = choice;
+                    
+                    document.getElementById('rps-turn-indicator').textContent = '뒤집기 버튼을 눌러주세요!';
+                    document.getElementById('rps-reveal-btn').disabled = false;
+                }
+            }
+        }
+        
+        // 가위바위보 카드 뒤집기
+        function revealRPSCards() {
+            if (rpsPlayer1Selected === null || rpsPlayer2Selected === null) return;
+            
+            rpsRevealed = true;
+            document.getElementById('rps-reveal-btn').disabled = true;
+            
+            if (flipMode === 'simultaneous') {
+                // 동시에 뒤집기 - 먼저 앞면을 원래대로 복원
+                const card1 = document.getElementById(`rps-card-${rpsPlayer1Selected}`);
+                const card2 = document.getElementById(`rps-card-${rpsPlayer2Selected}`);
+                
+                // 앞면을 원래대로 복원
+                card1.querySelector('.flip-card-front').textContent = '🎴';
+                card2.querySelector('.flip-card-front').textContent = '🎴';
+                
+                // 뒤집기 애니메이션
+                setTimeout(() => {
+                    const rpsChoices = ['✊', '✋', '✌️'];
+                    
+                    // 플레이어 1 카드 뒤집기
+                    card1.classList.add('flipped');
+                    const choice1 = rpsCards[rpsPlayer1Selected];
+                    card1.querySelector('.flip-card-back').textContent = choice1;
+                    
+                    // 플레이어 2 카드 뒤집기
+                    card2.classList.add('flipped');
+                    const choice2 = rpsCards[rpsPlayer2Selected];
+                    card2.querySelector('.flip-card-back').textContent = choice2;
+                    
+                    setTimeout(() => {
+                        calculateRPSResult();
+                    }, 500);
+                }, 200);
+            }
+        }
+        
+        // 가위바위보 결과 계산
+        function calculateRPSResult() {
+            const choice1 = rpsCards[rpsPlayer1Selected];
+            const choice2 = rpsCards[rpsPlayer2Selected];
+            
+            const choiceNames = { '✊': '바위', '✋': '보', '✌️': '가위' };
+            
+            let result = '';
+            let winner = '';
+            
+            if (choice1 === choice2) {
+                result = '무승부!';
+                winner = 'draw';
+                // 무승부 시에는 순서 변경 없음
+            } else if (
+                (choice1 === '✊' && choice2 === '✌️') ||
+                (choice1 === '✋' && choice2 === '✊') ||
+                (choice1 === '✌️' && choice2 === '✋')
             ) {
                 result = '플레이어 1 승리!';
                 winner = 'player1';
+                rpsPlayer1Score = Math.min(targetScore, rpsPlayer1Score + 1);
+                rpsPlayer2Score = Math.max(0, rpsPlayer2Score - 1);
+                // 플레이어 2가 졌으므로 다음 라운드에서 먼저 선택
+                rpsFirstPlayer = 2;
             } else {
                 result = '플레이어 2 승리!';
                 winner = 'player2';
+                rpsPlayer2Score = Math.min(targetScore, rpsPlayer2Score + 1);
+                rpsPlayer1Score = Math.max(0, rpsPlayer1Score - 1);
+                // 플레이어 1이 졌으므로 다음 라운드에서 먼저 선택
+                rpsFirstPlayer = 1;
             }
             
-            // 점수 업데이트 (승리 +1, 패배 -1, 무승부는 변화 없음)
-            let rewardMessage = '';
-            let scoreChangeMessage = '';
+            document.getElementById('rps-player1-score').textContent = rpsPlayer1Score;
+            document.getElementById('rps-player2-score').textContent = rpsPlayer2Score;
             
-            if (winner === 'player1') {
-                fatePlayer1Wins = Math.min(5, fatePlayer1Wins + 1); // 최대 5점
-                fatePlayer2Wins = Math.max(0, fatePlayer2Wins - 1); // 최소 0점
-                lastWinner = 'player1';
-                scoreChangeMessage = '📈 플레이어 1: +1점, 플레이어 2: -1점';
-                
-                // 보상 메시지와 음성
-                if (fateRewards[fatePlayer1Wins]) {
-                    rewardMessage = `<div style="margin-top: 15px; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; font-size: 1.2rem;">
-                        🎉 ${fatePlayer1Wins}점 달성! 플레이어 2가 말하세요: "<strong>${fateRewards[fatePlayer1Wins]}</strong>"
-                    </div>`;
-                    
-                    // 음성으로 말하기
-                    setTimeout(() => {
-                        speakText(`${fatePlayer1Wins}점 달성! 플레이어 2가 ${fateRewards[fatePlayer1Wins]}라고 말하세요`);
-                    }, 1000);
-                }
-            } else if (winner === 'player2') {
-                fatePlayer2Wins = Math.min(5, fatePlayer2Wins + 1); // 최대 5점
-                fatePlayer1Wins = Math.max(0, fatePlayer1Wins - 1); // 최소 0점
-                lastWinner = 'player2';
-                scoreChangeMessage = '📈 플레이어 2: +1점, 플레이어 1: -1점';
-                
-                // 보상 메시지와 음성
-                if (fateRewards[fatePlayer2Wins]) {
-                    rewardMessage = `<div style="margin-top: 15px; padding: 15px; background: linear-gradient(135deg, #e91e63 0%, #f06292 100%); color: white; border-radius: 10px; font-size: 1.2rem;">
-                        🎉 ${fatePlayer2Wins}점 달성! 플레이어 1이 말하세요: "<strong>${fateRewards[fatePlayer2Wins]}</strong>"
-                    </div>`;
-                    
-                    // 음성으로 말하기
-                    setTimeout(() => {
-                        speakText(`${fatePlayer2Wins}점 달성! 플레이어 1이 ${fateRewards[fatePlayer2Wins]}라고 말하세요`);
-                    }, 1000);
-                }
-            } else {
-                scoreChangeMessage = '🤝 무승부: 점수 변화 없음';
-            }
-            
-            document.getElementById('fate-result').innerHTML = `
-                <div style="margin: 20px 0; text-align: center;">
-                    <div style="font-size: 1.2rem; margin-bottom: 15px;">
-                        플레이어 1: ${player1Card.emoji} ${player1Card.name} vs 플레이어 2: ${player2Card.emoji} ${player2Card.name}
-                    </div>
-                    <div style="font-weight: bold; font-size: 1.3rem; margin-bottom: 10px;">
-                        ${result}
-                    </div>
-                    <div style="font-size: 1.1rem; color: #666; margin: 10px 0;">
-                        ${scoreChangeMessage}
-                    </div>
-                    ${rewardMessage}
-                </div>
-            `;
-            
-            fateCurrentRound++;
-            updateFateDisplay();
-            
-            // 최종 승리 확인
-            if (fatePlayer1Wins >= fateTargetWins || fatePlayer2Wins >= fateTargetWins) {
-                const finalWinner = fatePlayer1Wins >= fateTargetWins ? '플레이어 1' : '플레이어 2';
-                const loser = finalWinner === '플레이어 1' ? '플레이어 2' : '플레이어 1';
-                document.getElementById('fate-result').innerHTML += `
-                    <div class="love-message" style="font-size: 1.5rem; margin-top: 20px; animation: pulse 2s infinite;">
-                        🏆 ${finalWinner} 최종 승리! 🏆<br>
-                        ${loser}가 "${fateRewards[5]}"라고 말하세요!
+            if (!checkWin(rpsPlayer1Score, rpsPlayer2Score, 'rps')) {
+                document.getElementById('rps-result').innerHTML = `
+                    <div>플레이어 1: ${choice1} (${choiceNames[choice1]}) vs 플레이어 2: ${choice2} (${choiceNames[choice2]})</div>
+                    <div style="margin: 10px 0; font-weight: bold;">${result}</div>
+                    <div style="font-size: 1rem; color: #666;">
+                        ${winner === 'player1' ? '플레이어 1 +1점, 플레이어 2 -1점' : 
+                          winner === 'player2' ? '플레이어 2 +1점, 플레이어 1 -1점' : '점수 변화 없음'}
                     </div>
                 `;
                 
-                // 최종 승리 음성
+                // 다음 라운드 준비
                 setTimeout(() => {
-                    speakText(`${finalWinner} 최종 승리! ${loser}가 ${fateRewards[5]}라고 말하세요!`);
-                }, 1500);
-                return;
+                    resetRPSRound();
+                }, 3000);
+            }
+        }
+        
+        // 가위바위보 라운드 리셋
+        function resetRPSRound() {
+            rpsPlayer1Selected = null;
+            rpsPlayer2Selected = null;
+            rpsRevealed = false;
+            rpsCards = [];
+            
+            // 모든 카드 뒤집기 해제
+            for (let i = 0; i < 6; i++) {
+                const card = document.getElementById(`rps-card-${i}`);
+                card.classList.remove('flipped');
+                card.querySelector('.flip-card-front').textContent = '🎴';
+                card.querySelector('.flip-card-back').textContent = '?';
             }
             
-            // 다음 라운드 준비
-            setTimeout(() => {
-                startNewFateRound();
-            }, 3000);
-        }
-
-        function resetFateSelection() {
-            fatePlayer1Selected = null;
-            fatePlayer2Selected = null;
-            fateRevealed = false;
+            // UI 상태 리셋 - 선택 순서에 따라 안내 메시지 변경
+            document.getElementById('rps-player1-status').textContent = '플레이어 1: 카드를 선택하세요';
+            document.getElementById('rps-player2-status').textContent = '플레이어 2: 카드를 선택하세요';
             
-            // 모든 카드 초기화
-            document.querySelectorAll('.fate-card').forEach(card => {
-                card.classList.remove('flipped', 'selected');
-                card.style.border = '';
-            });
-            
-            // 차례에 따른 상태 메시지 설정
-            let firstPlayer = getFirstPlayer();
-            if (firstPlayer === 'player1') {
-                document.getElementById('fate-player1-status').textContent = '플레이어 1: 카드를 선택하세요';
-                document.getElementById('fate-player2-status').textContent = '플레이어 2: 차례를 기다리세요';
-                document.getElementById('turn-indicator').textContent = '플레이어 1의 차례입니다!';
+            if (rpsFirstPlayer === 1) {
+                document.getElementById('rps-turn-indicator').textContent = '플레이어 1부터 선택해주세요!';
             } else {
-                document.getElementById('fate-player1-status').textContent = '플레이어 1: 차례를 기다리세요';
-                document.getElementById('fate-player2-status').textContent = '플레이어 2: 카드를 선택하세요';
-                document.getElementById('turn-indicator').textContent = '플레이어 2의 차례입니다! (이전 라운드 패배자가 먼저)';
+                document.getElementById('rps-turn-indicator').textContent = '플레이어 2부터 선택해주세요!';
             }
             
-            document.getElementById('fate-player1-status').style.color = '#667eea';
-            document.getElementById('fate-player2-status').style.color = '#e91e63';
-            
-            // 뒤집기 버튼 비활성화
-            document.getElementById('fate-reveal-btn').disabled = true;
-            document.getElementById('fate-reveal-btn').style.opacity = '0.5';
-            document.getElementById('fate-reveal-btn').style.cursor = 'not-allowed';
+            document.getElementById('rps-reveal-btn').disabled = true;
         }
 
-        function resetFateGame() {
-            startFateGame();
+        function resetRPS() {
+            rpsPlayer1Score = 0;
+            rpsPlayer2Score = 0;
+            rpsFirstPlayer = 1; // 게임 리셋 시 플레이어 1부터 시작
+            document.getElementById('rps-player1-score').textContent = '0';
+            document.getElementById('rps-player2-score').textContent = '0';
+            document.getElementById('rps-result').innerHTML = '';
+            resetRPSRound();
+        }
+
+        // 주사위 게임
+        function rollPlayer1Dice() {
+            if (player1DiceRoll !== null) return; // 이미 던진 경우 무시
+            
+            player1DiceRoll = Math.floor(Math.random() * 6) + 1;
+            
+            if (flipMode === 'sequential') {
+                // 순서대로 뒤집기 모드에서는 즉시 공개
+                setTimeout(() => {
+                    const diceEmojis = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+                    document.getElementById('player1-dice').textContent = diceEmojis[player1DiceRoll - 1];
+                    document.getElementById('player1-dice-number').textContent = player1DiceRoll;
+                }, 500);
+            } else {
+                // 동시에 뒤집기 모드에서는 선택 완료 표시만
+                document.getElementById('player1-dice').textContent = '🎯';
+                document.getElementById('player1-dice-number').textContent = '선택완료';
+            }
+            
+            // 두 플레이어 모두 던졌으면 비교 버튼 활성화 (동시 모드) 또는 자동 결과 (순서 모드)
+            if (player2DiceRoll !== null) {
+                if (flipMode === 'simultaneous') {
+                    document.getElementById('dice-compare-btn').disabled = false;
+                } else {
+                    // 순서대로 모드에서는 자동으로 결과 계산
+                    setTimeout(() => {
+                        calculateDiceResult();
+                    }, 1500);
+                }
+            }
+        }
+        
+        function rollPlayer2Dice() {
+            if (player2DiceRoll !== null) return; // 이미 던진 경우 무시
+            
+            player2DiceRoll = Math.floor(Math.random() * 6) + 1;
+            
+            if (flipMode === 'sequential') {
+                // 순서대로 뒤집기 모드에서는 즉시 공개
+                setTimeout(() => {
+                    const diceEmojis = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+                    document.getElementById('player2-dice').textContent = diceEmojis[player2DiceRoll - 1];
+                    document.getElementById('player2-dice-number').textContent = player2DiceRoll;
+                }, 500);
+            } else {
+                // 동시에 뒤집기 모드에서는 선택 완료 표시만
+                document.getElementById('player2-dice').textContent = '🎯';
+                document.getElementById('player2-dice-number').textContent = '선택완료';
+            }
+            
+            // 두 플레이어 모두 던졌으면 비교 버튼 활성화 (동시 모드) 또는 자동 결과 (순서 모드)
+            if (player1DiceRoll !== null) {
+                if (flipMode === 'simultaneous') {
+                    document.getElementById('dice-compare-btn').disabled = false;
+                } else {
+                    // 순서대로 모드에서는 자동으로 결과 계산
+                    setTimeout(() => {
+                        calculateDiceResult();
+                    }, 1500);
+                }
+            }
+        }
+        
+        function compareDice() {
+            if (player1DiceRoll === null || player2DiceRoll === null) return;
+            
+            document.getElementById('dice-compare-btn').disabled = true;
+            
+            // 동시에 뒤집기 애니메이션
+            document.getElementById('player1-dice').textContent = '🎲';
+            document.getElementById('player2-dice').textContent = '🎲';
+            document.getElementById('player1-dice-number').textContent = '?';
+            document.getElementById('player2-dice-number').textContent = '?';
+            
+            setTimeout(() => {
+                const diceEmojis = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+                document.getElementById('player1-dice').textContent = diceEmojis[player1DiceRoll - 1];
+                document.getElementById('player2-dice').textContent = diceEmojis[player2DiceRoll - 1];
+                document.getElementById('player1-dice-number').textContent = player1DiceRoll;
+                document.getElementById('player2-dice-number').textContent = player2DiceRoll;
+                
+                calculateDiceResult();
+            }, 1000);
+        }
+        
+        function calculateDiceResult() {
+            let result = '';
+            let winner = '';
+            
+            if (player1DiceRoll === player2DiceRoll) {
+                result = '무승부!';
+                winner = 'draw';
+                // 무승부 시에는 순서 변경 없음
+            } else if (player1DiceRoll > player2DiceRoll) {
+                result = '플레이어 1 승리!';
+                winner = 'player1';
+                dicePlayer1Score = Math.min(targetScore, dicePlayer1Score + 1);
+                dicePlayer2Score = Math.max(0, dicePlayer2Score - 1);
+                // 플레이어 2가 졌으므로 다음 라운드에서 먼저 선택
+                diceFirstPlayer = 2;
+            } else {
+                result = '플레이어 2 승리!';
+                winner = 'player2';
+                dicePlayer2Score = Math.min(targetScore, dicePlayer2Score + 1);
+                dicePlayer1Score = Math.max(0, dicePlayer1Score - 1);
+                // 플레이어 1이 졌으므로 다음 라운드에서 먼저 선택
+                diceFirstPlayer = 1;
+            }
+            
+            document.getElementById('dice-player1-score').textContent = dicePlayer1Score;
+            document.getElementById('dice-player2-score').textContent = dicePlayer2Score;
+            
+            if (!checkWin(dicePlayer1Score, dicePlayer2Score, 'dice')) {
+                document.getElementById('dice-result').innerHTML = `
+                    <div>플레이어 1: ${player1DiceRoll} vs 플레이어 2: ${player2DiceRoll}</div>
+                    <div style="margin: 10px 0; font-weight: bold;">${result}</div>
+                    <div style="font-size: 1rem; color: #666;">
+                        ${winner === 'player1' ? '플레이어 1 +1점, 플레이어 2 -1점' : 
+                          winner === 'player2' ? '플레이어 2 +1점, 플레이어 1 -1점' : '점수 변화 없음'}
+                    </div>
+                `;
+                
+                // 다음 라운드 준비
+                setTimeout(() => {
+                    resetDiceRound();
+                }, 3000);
+            }
+        }
+        
+        function resetDiceRound() {
+            player1DiceRoll = null;
+            player2DiceRoll = null;
+            document.getElementById('player1-dice').textContent = '🎲';
+            document.getElementById('player2-dice').textContent = '🎲';
+            document.getElementById('player1-dice-number').textContent = '?';
+            document.getElementById('player2-dice-number').textContent = '?';
+            document.getElementById('dice-compare-btn').disabled = true;
+        }
+
+        function rollDice() {
+            const playerRoll = Math.floor(Math.random() * 6) + 1;
+            const computerRoll = Math.floor(Math.random() * 6) + 1;
+            
+            // 주사위 애니메이션 효과
+            document.getElementById('player-dice').textContent = '🎲';
+            document.getElementById('computer-dice').textContent = '🎲';
+            document.getElementById('player-dice-number').textContent = '?';
+            document.getElementById('computer-dice-number').textContent = '?';
+            
+            setTimeout(() => {
+                const diceEmojis = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+                document.getElementById('player-dice').textContent = diceEmojis[playerRoll - 1];
+                document.getElementById('computer-dice').textContent = diceEmojis[computerRoll - 1];
+                document.getElementById('player-dice-number').textContent = playerRoll;
+                document.getElementById('computer-dice-number').textContent = computerRoll;
+                
+                let result = '';
+                let winner = '';
+                
+                if (playerRoll === computerRoll) {
+                    result = '무승부!';
+                    winner = 'draw';
+                } else if (playerRoll > computerRoll) {
+                    result = '플레이어 승리!';
+                    winner = 'player';
+                    dicePlayerScore = Math.min(targetScore, dicePlayerScore + 1);
+                    diceComputerScore = Math.max(0, diceComputerScore - 1);
+                } else {
+                    result = '컴퓨터 승리!';
+                    winner = 'computer';
+                    diceComputerScore = Math.min(targetScore, diceComputerScore + 1);
+                    dicePlayerScore = Math.max(0, dicePlayerScore - 1);
+                }
+                
+                document.getElementById('dice-player-score').textContent = dicePlayerScore;
+                document.getElementById('dice-computer-score').textContent = diceComputerScore;
+                
+                if (!checkWin(dicePlayerScore, diceComputerScore, 'dice')) {
+                    document.getElementById('dice-result').innerHTML = `
+                        <div>플레이어: ${playerRoll} vs 컴퓨터: ${computerRoll}</div>
+                        <div style="margin: 10px 0; font-weight: bold;">${result}</div>
+                        <div style="font-size: 1rem; color: #666;">
+                            ${winner === 'player' ? '플레이어 +1점, 컴퓨터 -1점' : 
+                              winner === 'computer' ? '컴퓨터 +1점, 플레이어 -1점' : '점수 변화 없음'}
+                        </div>
+                    `;
+                }
+            }, 1000);
+        }
+
+        function resetDice() {
+            dicePlayer1Score = 0;
+            dicePlayer2Score = 0;
+            diceFirstPlayer = 1; // 게임 리셋 시 플레이어 1부터 시작
+            document.getElementById('dice-player1-score').textContent = '0';
+            document.getElementById('dice-player2-score').textContent = '0';
+            document.getElementById('dice-result').innerHTML = '';
+            resetDiceRound();
+        }
+
+        // 카드 게임
+        let cardValues = [];
+        let cardNames = [];
+        
+        // 카드 게임 시작
+        function startCardGame() {
+            // resetCardRound에서 모든 섞기와 초기화를 담당
+            resetCardRound();
+        }
+        
+        // 카드 선택
+        function selectCard(cardIndex) {
+            if (cardRevealed) return; // 이미 뒤집힌 상태면 무시
+            
+            // 첫 번째 선택자 결정
+            if (cardPlayer1Selected === null && cardPlayer2Selected === null) {
+                if (cardFirstPlayer === 1) {
+                    // 플레이어 1이 먼저 선택
+                    cardPlayer1Selected = cardIndex;
+                    document.getElementById('card-player1-status').textContent = '플레이어 1: 카드 선택 완료!';
+                    document.getElementById('card-turn-indicator').textContent = '플레이어 2가 선택해주세요!';
+                    
+                    // 선택 표시
+                    const card = document.getElementById(`card-${cardIndex}`);
+                    if (flipMode === 'sequential') {
+                        card.classList.add('flipped');
+                    } else {
+                        // 동시 뒤집기 모드에서는 선택 표시만
+                        card.querySelector('.flip-card-front').textContent = '🎯';
+                    }
+                } else {
+                    // 플레이어 2가 먼저 선택
+                    cardPlayer2Selected = cardIndex;
+                    document.getElementById('card-player2-status').textContent = '플레이어 2: 카드 선택 완료!';
+                    document.getElementById('card-turn-indicator').textContent = '플레이어 1이 선택해주세요!';
+                    
+                    // 선택 표시
+                    const card = document.getElementById(`card-${cardIndex}`);
+                    if (flipMode === 'sequential') {
+                        card.classList.add('flipped');
+                    } else {
+                        // 동시 뒤집기 모드에서는 선택 표시만
+                        card.querySelector('.flip-card-front').textContent = '🎯';
+                    }
+                }
+            } else {
+                // 두 번째 선택자
+                if (cardPlayer1Selected === null) {
+                    // 플레이어 1이 두 번째로 선택
+                    cardPlayer1Selected = cardIndex;
+                    document.getElementById('card-player1-status').textContent = '플레이어 1: 카드 선택 완료!';
+                } else {
+                    // 플레이어 2가 두 번째로 선택
+                    cardPlayer2Selected = cardIndex;
+                    document.getElementById('card-player2-status').textContent = '플레이어 2: 카드 선택 완료!';
+                }
+                
+                // 선택 표시
+                const card = document.getElementById(`card-${cardIndex}`);
+                if (flipMode === 'sequential') {
+                    card.classList.add('flipped');
+                    
+                    // 자동으로 결과 계산
+                    setTimeout(() => {
+                        calculateCardResult();
+                    }, 1000);
+                } else {
+                    // 동시 뒤집기 모드에서는 선택 표시만
+                    card.querySelector('.flip-card-front').textContent = '🎯';
+                    
+                    document.getElementById('card-turn-indicator').textContent = '뒤집기 버튼을 눌러주세요!';
+                    document.getElementById('card-reveal-btn').disabled = false;
+                }
+            }
+        }
+        
+        // 카드 뒤집기
+        function revealCards() {
+            if (cardPlayer1Selected === null || cardPlayer2Selected === null) return;
+            
+            cardRevealed = true;
+            document.getElementById('card-reveal-btn').disabled = true;
+            
+            if (flipMode === 'simultaneous') {
+                // 동시에 뒤집기 - 먼저 앞면을 원래대로 복원
+                const card1 = document.getElementById(`card-${cardPlayer1Selected}`);
+                const card2 = document.getElementById(`card-${cardPlayer2Selected}`);
+                
+                // 앞면을 원래대로 복원
+                card1.querySelector('.flip-card-front').textContent = '🃏';
+                card2.querySelector('.flip-card-front').textContent = '🃏';
+                
+                // 뒤집기 애니메이션
+                setTimeout(() => {
+                    card1.classList.add('flipped');
+                    card2.classList.add('flipped');
+                    
+                    setTimeout(() => {
+                        calculateCardResult();
+                    }, 500);
+                }, 200);
+            }
+        }
+        
+        // 카드 결과 계산
+        function calculateCardResult() {
+            const value1 = cardValues[cardPlayer1Selected];
+            const value2 = cardValues[cardPlayer2Selected];
+            const name1 = cardNames[cardPlayer1Selected];
+            const name2 = cardNames[cardPlayer2Selected];
+            
+            let result = '';
+            let winner = '';
+            
+            if (value1 === value2) {
+                result = '무승부!';
+                winner = 'draw';
+                // 무승부 시에는 순서 변경 없음
+            } else if (value1 > value2) {
+                result = '플레이어 1 승리!';
+                winner = 'player1';
+                cardPlayer1Score = Math.min(targetScore, cardPlayer1Score + 1);
+                cardPlayer2Score = Math.max(0, cardPlayer2Score - 1);
+                // 플레이어 2가 졌으므로 다음 라운드에서 먼저 선택
+                cardFirstPlayer = 2;
+            } else {
+                result = '플레이어 2 승리!';
+                winner = 'player2';
+                cardPlayer2Score = Math.min(targetScore, cardPlayer2Score + 1);
+                cardPlayer1Score = Math.max(0, cardPlayer1Score - 1);
+                // 플레이어 1이 졌으므로 다음 라운드에서 먼저 선택
+                cardFirstPlayer = 1;
+            }
+            
+            document.getElementById('card-player1-score').textContent = cardPlayer1Score;
+            document.getElementById('card-player2-score').textContent = cardPlayer2Score;
+            
+            if (!checkWin(cardPlayer1Score, cardPlayer2Score, 'card')) {
+                document.getElementById('card-result').innerHTML = `
+                    <div>플레이어 1: ${name1} (${value1}) vs 플레이어 2: ${name2} (${value2})</div>
+                    <div style="margin: 10px 0; font-weight: bold;">${result}</div>
+                    <div style="font-size: 1rem; color: #666;">
+                        ${winner === 'player1' ? '플레이어 1 +1점, 플레이어 2 -1점' : 
+                          winner === 'player2' ? '플레이어 2 +1점, 플레이어 1 -1점' : '점수 변화 없음'}
+                    </div>
+                `;
+                
+                // 다음 라운드 준비
+                setTimeout(() => {
+                    resetCardRound();
+                }, 3000);
+            }
+        }
+        
+        // 카드 라운드 리셋 (매 라운드마다 새로 섞기)
+        function resetCardRound() {
+            cardPlayer1Selected = null;
+            cardPlayer2Selected = null;
+            cardRevealed = false;
+            
+            // 카드 덱 생성
+            const baseCards = [];
+            for (let i = 0; i < 13; i++) {
+                baseCards.push({
+                    name: cardValueNames[i],
+                    value: cardNumbers[i]
+                });
+            }
+            
+            // Fisher-Yates 셔플 알고리즘으로 완전히 섞기
+            const shuffledCards = [...baseCards];
+            for (let i = shuffledCards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledCards[i], shuffledCards[j]] = [shuffledCards[j], shuffledCards[i]];
+            }
+            
+            // 카드 배열 초기화
+            cardValues = [];
+            cardNames = [];
+            
+            // 카드 컨테이너 비우기
+            const cardContainer = document.getElementById('card-container');
+            cardContainer.innerHTML = '';
+            
+            // 카드 HTML 동적 생성 - 매번 새로 섞인 순서로 배치
+            for (let i = 0; i < 13; i++) {
+                // 카드 HTML 생성
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'flip-card';
+                cardDiv.id = `card-${i}`;
+                cardDiv.style.width = '60px';
+                cardDiv.style.height = '90px';
+                cardDiv.style.fontSize = '1.5rem';
+                cardDiv.onclick = () => selectCard(i);
+                
+                cardDiv.innerHTML = `
+                    <div class="flip-card-front">🃏</div>
+                    <div class="flip-card-back">${shuffledCards[i].name}</div>
+                `;
+                
+                cardContainer.appendChild(cardDiv);
+                
+                // 배열에 저장
+                cardValues[i] = shuffledCards[i].value;
+                cardNames[i] = shuffledCards[i].name;
+            }
+            
+            // 디버그: 매 라운드 섞인 카드 순서 확인
+            console.log('라운드 시작 - 카드 섞기 결과:', shuffledCards.map(card => card.name).join(', '));
+            
+            // UI 상태 리셋 - 선택 순서에 따라 안내 메시지 변경
+            document.getElementById('card-player1-status').textContent = '플레이어 1: 카드를 선택하세요';
+            document.getElementById('card-player2-status').textContent = '플레이어 2: 카드를 선택하세요';
+            
+            if (cardFirstPlayer === 1) {
+                document.getElementById('card-turn-indicator').textContent = '플레이어 1부터 선택해주세요!';
+            } else {
+                document.getElementById('card-turn-indicator').textContent = '플레이어 2부터 선택해주세요!';
+            }
+            
+            document.getElementById('card-reveal-btn').disabled = true;
+        }
+
+        function drawCards() {
+            const playerCardIndex = Math.floor(Math.random() * 13);
+            const computerCardIndex = Math.floor(Math.random() * 13);
+            const playerSuit = cardSuits[Math.floor(Math.random() * 4)];
+            const computerSuit = cardSuits[Math.floor(Math.random() * 4)];
+            
+            const playerCard = cardValueNames[playerCardIndex];
+            const computerCard = cardValueNames[computerCardIndex];
+            const playerValue = cardNumbers[playerCardIndex];
+            const computerValue = cardNumbers[computerCardIndex];
+            
+            // 카드 뒤집기 애니메이션
+            document.getElementById('player-card-container').classList.add('flipped');
+            document.getElementById('computer-card-container').classList.add('flipped');
+            
+            setTimeout(() => {
+                document.getElementById('player-card').textContent = playerSuit + playerCard;
+                document.getElementById('computer-card').textContent = computerSuit + computerCard;
+                document.getElementById('player-card-value').textContent = `${playerCard} (${playerValue})`;
+                document.getElementById('computer-card-value').textContent = `${computerCard} (${computerValue})`;
+                
+                let result = '';
+                let winner = '';
+                
+                if (playerValue === computerValue) {
+                    result = '무승부!';
+                    winner = 'draw';
+                } else if (playerValue > computerValue) {
+                    result = '플레이어 승리!';
+                    winner = 'player';
+                    cardPlayerScore = Math.min(targetScore, cardPlayerScore + 1);
+                    cardComputerScore = Math.max(0, cardComputerScore - 1);
+                } else {
+                    result = '컴퓨터 승리!';
+                    winner = 'computer';
+                    cardComputerScore = Math.min(targetScore, cardComputerScore + 1);
+                    cardPlayerScore = Math.max(0, cardPlayerScore - 1);
+                }
+                
+                document.getElementById('card-player-score').textContent = cardPlayerScore;
+                document.getElementById('card-computer-score').textContent = cardComputerScore;
+                
+                if (!checkWin(cardPlayerScore, cardComputerScore, 'card')) {
+                    document.getElementById('card-result').innerHTML = `
+                        <div>플레이어: ${playerSuit}${playerCard} (${playerValue}) vs 컴퓨터: ${computerSuit}${computerCard} (${computerValue})</div>
+                        <div style="margin: 10px 0; font-weight: bold;">${result}</div>
+                        <div style="font-size: 1rem; color: #666;">
+                            ${winner === 'player' ? '플레이어 +1점, 컴퓨터 -1점' : 
+                              winner === 'computer' ? '컴퓨터 +1점, 플레이어 -1점' : '점수 변화 없음'}
+                        </div>
+                    `;
+                }
+                
+                // 카드 다시 뒤집기
+                setTimeout(() => {
+                    document.getElementById('player-card-container').classList.remove('flipped');
+                    document.getElementById('computer-card-container').classList.remove('flipped');
+                    document.getElementById('player-card-value').textContent = '?';
+                    document.getElementById('computer-card-value').textContent = '?';
+                }, 3000);
+            }, 600);
+        }
+
+        function resetCard() {
+            cardPlayer1Score = 0;
+            cardPlayer2Score = 0;
+            cardFirstPlayer = 1; // 게임 리셋 시 플레이어 1부터 시작
+            document.getElementById('card-player1-score').textContent = '0';
+            document.getElementById('card-player2-score').textContent = '0';
+            document.getElementById('card-result').innerHTML = '';
+            startCardGame(); // 새로운 카드 게임 시작
+        }
+
+        // 페이지 로드 시 첫 번째 게임 모드 활성화
+        window.onload = function() {
+            document.querySelector('.mode-btn').click();
+            updateRevealButtonTexts(); // 초기 버튼 텍스트 설정
+            startCardGame(); // 카드 게임 초기화
         }
     </script>
 </body>
